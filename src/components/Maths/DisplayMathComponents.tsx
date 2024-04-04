@@ -1,7 +1,7 @@
 import React from "react";
-import { Math } from "../../types/types";
+import { IMath } from "../../types/types";
 
-const DisplayMathInfo: React.FC<{math: Math}> = ({ math }) => {
+const DisplayMathInfo: React.FC<{math: IMath}> = ({ math }) => {
     return(
         <div>
             <h2>Math Information</h2>

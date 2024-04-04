@@ -1,9 +1,9 @@
 import React from "react";
-import { App } from "../../types/types";
+import { IApp } from "../../types/types";
 import DisplayAppInfo from "./DisplayAppComponents";
 
 const AppComponent: React.FC = () => {
-    const app: App = {
+    const app: IApp = {
         gameSetId: 1,
         appName: 'testJackpot',
         jackpotId: 1,

@@ -1,9 +1,9 @@
 import React from "react";
-import { User } from "../../types/types";
+import { IUser } from "../../types/types";
 import DisplayUserInfo from "./DisplayUserComponents";
 
 const UserComponent: React.FC = () => {
-    const user: User = {
+    const user: IUser = {
         userId: 1,
         userGroupId: 1
     };

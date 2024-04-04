@@ -1,20 +1,23 @@
 import React from "react";
-import { Game } from "../../types/types";
+import { IGame } from "../../types/types";
+import "../Style/style.css";
 
-//TODO: READ ABOUT FC
-const DisplayGameInfo: React.FC<{game: Game}> = ({ game }) => {
+const DisplayGameInfo: React.FC<{game: IGame}> = ({ game }) => {
     return(
-        <div>
-            <h2>Game Information</h2>
-            <p>Game ID: {game.gameId}</p>
-            <p>Game Name: {game.gameName}</p>
-            <p>Max Win Line Combination (Main): {game.maxWLCMain}</p> 
-            <p>Max Win Line Combination (Freegames): {game.maxWLCFreegames}</p>
-            <p>Freegames: {game.freegames ? 'Yes' : 'No'}</p>
-            <p>Gamble: {game.gamble ? 'Yes' : 'No'}</p>
-            <p>Jackpot: {game.jackpot ? 'Yes' : 'No'}</p>
-            <p>Version: {game.version[0]} | Commit: {game.version[1]}</p>
-        </div>
+                <tr className="table">
+                    <td>{game.gameName}</td>
+                    {/* <td>{game.gameId}</td> */}
+                    <td>{game.maxWLCMain}</td>
+                    <td>{game.maxWLCFreegames}</td>
+                    <td>{game.freegames ? "Yes" : "No"}</td>
+                    <td>{game.gamble ?  (
+                        "Yes"
+                        ) : (
+                            game.gamble === false ? "No" : "Optional")}</td>
+                    <td>{game.jackpot ? "Yes" : "No"}</td>
+                    {/* <td>{game.version[0]}</td> */}
+                    {/* <td>{game.version[1]}</td> */}
+            </tr>
     );
 };
 

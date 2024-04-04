@@ -1,9 +1,9 @@
 import React from "react";
-import { Math } from "../../types/types";
+import { IMath } from "../../types/types";
 import DisplayMathInfo from "./DisplayMathComponents";
 
 const MathComponent: React.FC = () => {
-    const math: Math = {
+    const math: IMath = {
         mathId: 1,
         mathName: 'testMath',
         percentage: [1],

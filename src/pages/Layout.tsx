@@ -1,12 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
 
 const Layout = () => {
+  const currentDate = new Date();
   return (
     <>
+    {currentDate.toLocaleString()}
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Game Mix</Link>
           </li>
           <li>
             <Link to="/blogs">Blogs</Link>

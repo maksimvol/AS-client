@@ -1,6 +1,3 @@
-// import React from 'react';
-// import './index.css';
-// import App from './App';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './pages/Layout';
@@ -25,12 +22,3 @@ export default function App() {
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );

@@ -1,7 +1,7 @@
 import React from "react";
-import { User } from "../../types/types";
+import { IUser } from "../../types/types";
 
-const DisplayUserInfo: React.FC<{user: User}> = ({ user }) => {
+const DisplayUserInfo: React.FC<{user: IUser}> = ({ user }) => {
     return(
         <div>
             <h2>User Information</h2>

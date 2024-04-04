@@ -1,7 +1,7 @@
 import React from "react";
-import { App } from "../../types/types";
+import { IApp } from "../../types/types";
 
-const DisplayAppInfo: React.FC<{app: App}> = ({ app }) => {
+const DisplayAppInfo: React.FC<{app: IApp}> = ({ app }) => {
     return(
         <div>
             <h2>App Information</h2>

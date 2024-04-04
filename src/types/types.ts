@@ -1,4 +1,4 @@
-export interface Game {
+export interface IGame {
     gameId: number;
     gameName: string;
     maxWLCMain: number;
@@ -6,25 +6,24 @@ export interface Game {
     freegames: boolean;
     gamble: boolean;
     jackpot: boolean;
-    version: [string, string];
 }
 
-export interface Math {
+export interface IMath {
     mathId: number;
     mathName: string;
     percentage: number[];
     percentageSetList: number[];
 }
 
-export interface Jackpot {
+export interface IJackpot {
     jackpotId: number;
     jackpotName: string;
     jackpotType: string[];
     percentageSetList: number[];
-    version: [string, string];
+    gameList: number[];
 }
 
-export interface App {
+export interface IApp {
     gameSetId: number;
     appName: string;
     jackpotId: number;
@@ -35,7 +34,7 @@ export interface App {
     interface: string;
 }
 
-export interface User {
+export interface IUser {
     userId: number;
     userGroupId: number;
 }
