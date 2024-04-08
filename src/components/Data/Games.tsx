@@ -7,7 +7,8 @@ export const games: IGame[] = [{
     maxWLCFreegames: 10000,
     freegames: true,
     gamble: true,
-    jackpot: true
+    jackpot: true,
+    mathId: 1
 },
 {
     gameName: 'testGame2',
@@ -16,7 +17,8 @@ export const games: IGame[] = [{
     maxWLCFreegames: 12000,
     freegames: true,
     gamble: true,
-    jackpot: true
+    jackpot: true,
+    mathId: 1
 },
 {
     gameName: 'testGame3',
@@ -25,7 +27,8 @@ export const games: IGame[] = [{
     maxWLCFreegames: 14000,
     freegames: true,
     gamble: true,
-    jackpot: true
+    jackpot: true,
+    mathId: -1
 },
 {
     gameName: 'testGame4',
@@ -34,6 +37,7 @@ export const games: IGame[] = [{
     maxWLCFreegames: 16000,
     freegames: true,
     gamble: true,
-    jackpot: true
+    jackpot: true,
+    mathId: 3
 }
 ];

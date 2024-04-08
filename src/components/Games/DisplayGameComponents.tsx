@@ -1,22 +1,30 @@
-import React from "react";
-import { IGame } from "../../types/types";
 import "../Style/style.css";
 
-const DisplayGameInfo: React.FC<{game: IGame}> = ({ game }) => {
+const HandleGameClick = ({gameClicked}:any) => {
+    console.log("Clicked game: ", gameClicked);
+}
+
+const DisplayGameInfo = ({game}:any) : JSX.Element => {   
+
     return(
-                <tr className="table">
-                    <td>{game.gameName}</td>
-                    {/* <td>{game.gameId}</td> */}
-                    <td>{game.maxWLCMain}</td>
-                    <td>{game.maxWLCFreegames}</td>
-                    <td>{game.freegames ? "Yes" : "No"}</td>
-                    <td>{game.gamble ?  (
-                        "Yes"
-                        ) : (
-                            game.gamble === false ? "No" : "Optional")}</td>
-                    <td>{game.jackpot ? "Yes" : "No"}</td>
-                    {/* <td>{game.version[0]}</td> */}
-                    {/* <td>{game.version[1]}</td> */}
+            <tr className="table">
+                {
+                    Object.keys(game).map((key: any, index: number)=>{
+                        if(key === 'gameId' || key === 'mathId') return
+                        const isBoolean = typeof game[key] === "boolean"
+                        return (
+                            <td key={game.gameName + "cell" + index} className={isBoolean ? (game[key] ? "green" : "red") : ""} >                            
+                                {
+                                    key === 'gameName' ? <button
+                                    // className="button" 
+                                    onClick={() => HandleGameClick({game})}>{game[key]}</button> :
+                                    isBoolean ?  (game[key] ? "*" : "") : game[key]
+                                }
+                            </td>
+                        )
+
+                    })  
+                } 
             </tr>
     );
 };

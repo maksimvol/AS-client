@@ -6,6 +6,7 @@ export interface IGame {
     freegames: boolean;
     gamble: boolean;
     jackpot: boolean;
+    mathId: number;
 }
 
 export interface IMath {

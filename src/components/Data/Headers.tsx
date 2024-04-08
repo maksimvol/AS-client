@@ -4,5 +4,6 @@ export const CompoundTableHeaders = {
     maxWLCFreegames: 'Max Win Line Combination (Freegames)',
     freegames: 'Freegames',
     gamble: 'Gamble',
-    jackpot: 'Jackpot'
+    jackpot: 'Jackpot',
+    math: 'Math Name'
 }

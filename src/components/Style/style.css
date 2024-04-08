@@ -12,3 +12,13 @@
     text-align: left;
     padding: 8px;
   }
+  .green {
+    background-color: green;
+  }
+  .red {
+    background-color: red;
+  }
+  .button {
+    border: none;
+    outline: none;
+  }
