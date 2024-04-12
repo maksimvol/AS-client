@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
 const Layout = () => {
   const currentDate = new Date();
@@ -8,13 +8,13 @@ const Layout = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Game Mix</Link>
+            <NavLink to="/">Game Mix</NavLink>
           </li>
           <li>
-            <Link to="/blogs">Blogs</Link>
+            <NavLink to="/blogs">Blogs</NavLink>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <NavLink to="/contact">Contact</NavLink>
           </li>
         </ul>
       </nav>

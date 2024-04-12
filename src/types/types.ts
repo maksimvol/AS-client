@@ -29,10 +29,12 @@ export interface IApp {
     appName: string;
     jackpotId: number;
     jackpotVersion: [string, string];
-    gameId: number;
-    gameVersion: [string, string];
     region: string;
     interface: string;
+    gameList: {
+        gameId: number;
+        gameVersion: [string, string];
+    }[];
 }
 
 export interface IUser {

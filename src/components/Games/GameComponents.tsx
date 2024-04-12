@@ -3,28 +3,28 @@ import DisplayGameInfo from "./DisplayGameComponents";
 import GameHeaders from "./GameHeaders";
 import { games } from "../Data/Games";
 import { CompoundTableHeaders } from "../Data/Headers";
-import { jackpots } from "../Data/Jackpots";
 import { gameMath } from "../Data/Math";
+import { app } from "../Data/Apps";
 
 const GameComponent: React.FC = () => {
-
     let headerValue = Object(CompoundTableHeaders);
     let gamesValues = Object(games);
     
     gamesValues.forEach((game:any)=>{ 
         game['mathName']  = gameMath.find((e)=>e.mathId === game.mathId)?.mathName ?? 'No Math Attached';
         
-        jackpots.forEach((jackpot, jpindex)=>{
-            let n = 'jp' + jpindex;
-            game[n] =  jackpot.gameList.find((e)=>e===game.gameId) ? true : false;
+        app.forEach((app)=>{
+            let n = 'app' + app.gameSetId;
+            game[n] =  app.gameList.find((e)=>e===game.gameId) ? true : false;
         });
       console.log(game)
     });
 
-    jackpots.forEach((jackpot, index)=>{
-        let v  = jackpot.jackpotName;
-        let n = 'jp'+index;
-        headerValue[n] = v;
+
+    app.forEach((app)=>{
+        let v  = app.appName;
+        let n = 'app'+app.gameSetId;
+        headerValue[n] = [v, app.gameSetId];
     })
     
     return (
@@ -40,6 +40,7 @@ const GameComponent: React.FC = () => {
                 }
             </tbody>
         </table>
+        
     );
 };
 export default GameComponent;

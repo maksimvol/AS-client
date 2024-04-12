@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
+import GameSet from './pages/GameSet';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="blogs" element={<Blogs />} />
           <Route path="contact" element={<Contact />} />
           <Route path="*" element={<NoPage />} />
+          <Route path="gameSet/:setId" element={<GameSet/>} />
         </Route>
       </Routes>
     </Router>

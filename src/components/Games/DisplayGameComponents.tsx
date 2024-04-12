@@ -1,8 +1,6 @@
+// import { games } from "../Data/Games";
 import "../Style/style.css";
-
-const HandleGameClick = ({gameClicked}:any) => {
-    console.log("Clicked game: ", gameClicked);
-}
+import { Link } from "react-router-dom";
 
 const DisplayGameInfo = ({game}:any) : JSX.Element => {   
 
@@ -10,19 +8,32 @@ const DisplayGameInfo = ({game}:any) : JSX.Element => {
             <tr className="table">
                 {
                     Object.keys(game).map((key: any, index: number)=>{
-                        if(key === 'gameId' || key === 'mathId') return
+                        if(key === 'gameId' || key === 'mathId') return null
                         const isBoolean = typeof game[key] === "boolean"
+                        const setID = key.includes('app') ? key.split('app').pop() : undefined
+
+                        let cellData;
+
+                        if(isBoolean) {
+                            let val = game[key] ? "*" : "";
+
+                            if (setID){
+                                cellData = <Link to={`/gameSet/${setID}`}>{val}</Link>
+                            } else {
+                                cellData = val
+                            }
+                        }   
+                        else {
+                            cellData = game[key]
+                        }
+
                         return (
                             <td key={game.gameName + "cell" + index} className={isBoolean ? (game[key] ? "green" : "red") : ""} >                            
                                 {
-                                    key === 'gameName' ? <button
-                                    // className="button" 
-                                    onClick={() => HandleGameClick({game})}>{game[key]}</button> :
-                                    isBoolean ?  (game[key] ? "*" : "") : game[key]
+                                    cellData
                                 }
                             </td>
                         )
-
                     })  
                 } 
             </tr>

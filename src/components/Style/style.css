@@ -4,7 +4,7 @@
     background-color: #f2f2f2;
   }
   
-  .table th {
+  .table th, thead {
     background-color: rgb(223, 203, 203);
   }
   .table td {
