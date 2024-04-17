@@ -22,3 +22,10 @@
     border: none;
     outline: none;
   }
+  .logo {
+    height: 100px;
+    /* width: 100px; */
+  }
+  /* .date {
+    text-align: right;
+  } */

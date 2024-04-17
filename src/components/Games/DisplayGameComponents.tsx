@@ -1,4 +1,5 @@
-// import { games } from "../Data/Games";
+import { IGame } from "../../types/types";
+import { games } from "../Data/Games";
 import "../Style/style.css";
 import { Link } from "react-router-dom";
 

@@ -11,7 +11,8 @@ const AppChosenComponent: React.FC = () => {
     
     if (!currentApp) return <></>;
 
-    const gameListGames: IGame[] = games.filter(game => currentApp.gameList.filter(e=>e.gameId === game.gameId));
+    const gameListGames: IGame[] = games.filter(game => currentApp.gameList.map(e => e.gameId).includes(game.gameId));
+
     console.log(gameListGames)
     console.log(currentApp)
     console.log(app)
@@ -19,14 +20,20 @@ const AppChosenComponent: React.FC = () => {
     return(
         <>
             <h2>App Name: {currentApp.appName}</h2>
+            <h2>Games Info</h2>
+            {gameListGames.map(game => (
+                <li key={game.gameId}>
+                    <strong>Game Name: </strong>{game.gameName} | <strong>Game Id: </strong> {game.gameId}
+                </li>
+            ))}
             
-            <h2>Game ID's</h2>{currentApp.gameList.join(', ')}
+            {/* <h2>Game ID's</h2>{currentApp.gameList.map(game => game.gameId).join(", ")}
             <h2>Game Name's</h2>
                 <ul>
                     {gameListGames.map(game => (
                         <li key={game.gameId}>{game.gameName}</li>
                     ))}
-                </ul>
+                </ul> */}
         </>
     );
 };

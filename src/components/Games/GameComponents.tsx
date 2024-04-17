@@ -15,7 +15,7 @@ const GameComponent: React.FC = () => {
         
         app.forEach((app)=>{
             let n = 'app' + app.gameSetId;
-            game[n] =  app.gameList.find((e)=>e===game.gameId) ? true : false;
+            game[n] =  app.gameList.find((e)=>e.gameId === game.gameId) ? true : false;
         });
       console.log(game)
     });

@@ -8,7 +8,7 @@ export const app: IApp[] = [{
     region: 'Columbia', // move to build set history
     interface: 'testInterface',
     gameList:[{
-        gameId: 55,
+        gameId: 1,
         gameVersion: ['4.0.0.2x', '10'],
     }, 
     ]

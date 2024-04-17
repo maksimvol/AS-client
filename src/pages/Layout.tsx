@@ -1,10 +1,15 @@
 import { Outlet, NavLink } from "react-router-dom";
+// import Image from "../components/Images/logo.png"
+import Gif from "../components/Images/logo.gif"
 
 const Layout = () => {
   const currentDate = new Date();
   return (
     <>
-    {currentDate.toLocaleString()}
+    <img src={Gif} alt="gif_logo" className="logo"/>
+    <div className="date">
+      {currentDate.toLocaleString()}
+    </div>
       <nav>
         <ul>
           <li>
