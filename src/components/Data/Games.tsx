@@ -8,6 +8,7 @@ export const games: IGame[] = [{
     freegames: true,
     gamble: true,
     jackpot: true,
+    gameVersion: ['1.0', '1'],
     mathId: 1
 },
 {
@@ -18,6 +19,7 @@ export const games: IGame[] = [{
     freegames: true,
     gamble: true,
     jackpot: true,
+    gameVersion: ['1.0', '1'],
     mathId: 1
 },
 {
@@ -28,7 +30,8 @@ export const games: IGame[] = [{
     freegames: true,
     gamble: true,
     jackpot: true,
-    mathId: -1
+    gameVersion: ['1.0', '1'],
+    mathId: -1,
 },
 {
     gameName: 'testGame4',
@@ -38,6 +41,7 @@ export const games: IGame[] = [{
     freegames: true,
     gamble: true,
     jackpot: true,
-    mathId: 3
+    gameVersion: ['1.0', '1'],
+    mathId: 3,
 }
 ];

@@ -1,26 +1,28 @@
-.table {
+  table {
     border-collapse: collapse;
+    border-spacing: 0;
     width: 100%;
-    background-color: #f2f2f2;
+    border: 1px solid #ddd;
   }
   
-  .table th, thead {
-    background-color: rgb(223, 203, 203);
-  }
-  .table td {
-    border: 1px solid #dddddd;
+  table th, thead, td {
     text-align: left;
-    padding: 8px;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  table th {
+    text-align: center;
+    background-color: #b87e83;
+    color: white;
+  }
+  table tr:hover{
+    background-color: #ddd;
   }
   .green {
     background-color: green;
   }
   .red {
     background-color: red;
-  }
-  .button {
-    border: none;
-    outline: none;
   }
   .logo {
     height: 100px;

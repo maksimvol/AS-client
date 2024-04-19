@@ -5,6 +5,7 @@ import { games } from "../Data/Games";
 import { CompoundTableHeaders } from "../Data/Headers";
 import { gameMath } from "../Data/Math";
 import { app } from "../Data/Apps";
+// import { IGameModed } from "../../types/types";
 
 const GameComponent: React.FC = () => {
     let headerValue = Object(CompoundTableHeaders);
@@ -40,7 +41,6 @@ const GameComponent: React.FC = () => {
                 }
             </tbody>
         </table>
-        
     );
 };
 export default GameComponent;

@@ -1,13 +1,17 @@
+import React from "react";
+import { jackpots } from "../Data/Jackpots";
+import { games } from "../Data/Games";
 import DisplayJackpotInfo from "./DisplayJackpotComponents";
 import JackpotHeaders from "./JackpotHeaders";
-import { jackpots } from "../Data/Jackpots";
 
 const JackpotComponent: React.FC = () => {
-    
+    // Convert jackpots object to array
+    const jackpotValues = Object.values(jackpots);
 
-    // const JackpotComponents = jackpots.map((jackpot, index) => (
-    //     <DisplayJackpotInfo key={"jackpot"+index} jackpot={jackpot} />
-    // ));
+    // Link gameList IDs to actual game objects
+    jackpotValues.forEach((jackpot: any) => {
+        jackpot.gameList = games.find((game) => game.gameId === jackpot.gameList);
+    });
 
     return (
         <table>
@@ -15,13 +19,12 @@ const JackpotComponent: React.FC = () => {
                 <JackpotHeaders jackpots={jackpots} />
             </thead>
             <tbody>
-                {
-                    Object.values(jackpots).map((jackpot, index) => (
-                        <DisplayJackpotInfo key={"jackpot"+index} jackpot={jackpot} />
-                    ))
-                }
+                {jackpotValues.map((jackpot: any, index) => (
+                    <DisplayJackpotInfo key={"jackpot" + index} jackpot={jackpot} />
+                ))}
             </tbody>
         </table>
     );
 };
+
 export default JackpotComponent;

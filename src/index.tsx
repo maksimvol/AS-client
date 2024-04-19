@@ -1,11 +1,12 @@
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
-import Blogs from './pages/Blogs';
+import AddGame from './pages/AddGame';
 import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
 import GameSet from './pages/GameSet';
+
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="blogs" element={<Blogs />} />
+          <Route path="addGame" element={<AddGame />} />
           <Route path="contact" element={<Contact />} />
           <Route path="*" element={<NoPage />} />
           <Route path="gameSet/:setId" element={<GameSet/>} />
@@ -23,4 +24,6 @@ export default function App() {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+let container= document.getElementById('root')
+let root = createRoot(container!);
+root.render(<App />);

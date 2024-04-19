@@ -1,5 +1,3 @@
-import { IGame } from "../../types/types";
-import { games } from "../Data/Games";
 import "../Style/style.css";
 import { Link } from "react-router-dom";
 
@@ -24,7 +22,10 @@ const DisplayGameInfo = ({game}:any) : JSX.Element => {
                                 cellData = val
                             }
                         }   
-                        else {
+                        else if(key === 'gameVersion'){
+                            cellData = game[key].join(' | ')
+                        }
+                        else { 
                             cellData = game[key]
                         }
 

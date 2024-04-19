@@ -5,5 +5,6 @@ export const CompoundTableHeaders = {
     freegames: 'Freegames',
     gamble: 'Gamble',
     jackpot: 'Jackpot',
+    version: 'Game Version | Commit',
     math: 'Math Name'
 }

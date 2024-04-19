@@ -1,17 +1,17 @@
 import React from "react";
-import { IJackpot } from "../../types/types";
+import { IApp, IJackpot } from "../../types/types";
 import "../Style/style.css";
+import { app } from "../Data/Apps";
+import { useParams } from "react-router-dom";
 
 const DisplayJackpotInfo: React.FC<{jackpot: IJackpot}> = ({ jackpot }) => {
+    let {setId} = useParams()
+    let currentAppId = Number(setId)
+    const currentApp: IApp | undefined | null = app.find((appV: IApp) => appV.gameSetId === currentAppId)
     return(
         <tr className="table">
             <td>{jackpot.jackpotName}</td>
-            <td>{jackpot.gameList.join(', ')}</td>
-            {/* <td>{jackpot.jackpotId}</td> */}
-            {/* <td>{jackpot.jackpotType}</td> */}
-            {/* <td>{jackpot.percentageSetList.join(', ')}</td> */}
-            {/* <td>{jackpot.version[0]}</td> */}
-            {/* <td>{jackpot.version[1]}</td> */}
+            <td>{currentApp?.jackpotVersion.join(' | ')}</td>
         </tr>
     );
 };
