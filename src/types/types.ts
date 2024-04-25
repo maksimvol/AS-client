@@ -1,5 +1,6 @@
 export interface IGame {
     gameId: number;
+    systemId: number;
     gameName: string;
     maxWLCMain: number;
     maxWLCFreegames: number;
