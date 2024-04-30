@@ -21,6 +21,15 @@ const Layout = () => {
             <NavLink to="/addGame">Add Game</NavLink>
           </li>
           <li>
+            <NavLink to="/addApp">Add App</NavLink>
+          </li>
+          <li>
+            <NavLink to="/addJackpot">Add Jackpot</NavLink>
+          </li>
+          <li>
+            <NavLink to="/addMath">Add Math</NavLink>
+          </li>
+          <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
         </ul>

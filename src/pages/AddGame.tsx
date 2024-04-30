@@ -29,13 +29,26 @@ const AddGame = () : JSX.Element => {
     e.preventDefault();
     const NameAlreadyExists = games.find((e)=>e.gameName === name);
     const IdAlreadyExists = games.find((e)=>e.systemId === systemId);
-    const isEmpty = !name;
+
+    const isEmptyName = !name;
+    const isEmptySystemId = !systemId;
+    const isEmptyMaxWLCMain = !maxWLCMain;
+    const isEmptyMaxWLCFreegames = !maxWLCFreegames;
+
     if(NameAlreadyExists){
         alert("Game Name already exists! Please type different Game Name!");
     } else if(IdAlreadyExists){
         alert("System Id already exists! Please type different System Id!");
-    } else if(isEmpty){
+    } else if(isEmptyName || isEmptySystemId || isEmptyMaxWLCMain || isEmptyMaxWLCFreegames){
         alert("Field Is Empty! Please Fill all the required fields!")
+        if(isEmptyName)
+          alert("Game Name")
+        else if(isEmptySystemId)
+          alert("System Id")
+        else if(isEmptyMaxWLCMain)
+          alert("Max WLC Main")
+        else if(isEmptyMaxWLCFreegames)
+          alert("Max WLC Freegames")
     } else{
       const newGame: IGame = {
         gameName: name,

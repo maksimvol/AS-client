@@ -7,7 +7,7 @@ const DisplayGameInfo = ({game}:any) : JSX.Element => {
             <tr className="table">
                 {
                     Object.keys(game).map((key: any, index: number)=>{
-                        if(key === 'gameId' || key === 'mathId') return null
+                        if(key === 'gameId' || key === 'mathId' || key === 'systemId') return null
                         const isBoolean = typeof game[key] === "boolean"
                         const setID = key.includes('app') ? key.split('app').pop() : undefined
 

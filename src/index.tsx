@@ -6,6 +6,9 @@ import AddGame from './pages/AddGame';
 import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
 import GameSet from './pages/GameSet';
+import AddApp from './pages/AddApp';
+import AddJackpot from './pages/AddJackpot';
+import AddMath from './pages/AddMath';
 
 
 export default function App() {
@@ -15,6 +18,9 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="addGame" element={<AddGame />} />
+          <Route path="addApp" element={<AddApp />} />
+          <Route path="addJackpot" element={<AddJackpot />} />
+          <Route path="addMath" element={<AddMath />} />
           <Route path="contact" element={<Contact />} />
           <Route path="*" element={<NoPage />} />
           <Route path="gameSet/:setId" element={<GameSet/>} />

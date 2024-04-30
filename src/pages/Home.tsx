@@ -7,7 +7,6 @@ const Home = () => {
             <div style={{ display: 'inline-block' }}>
                 <GameComponent />
             </div>
-            <p><strong>NOTE: GAME SHOULD HAVE gameId and systemId - gameId is adding automatically, systemId - with hands</strong></p>
         </div>
     );
   };
