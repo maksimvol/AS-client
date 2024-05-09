@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IApp } from "../types/types";
+import { IApp, IGame } from "../types/types";
 import { games } from "../components/Data/Games";
 import { app } from "../components/Data/Apps";
 
@@ -10,6 +10,7 @@ const AddApp = () : JSX.Element => {
   const [region, setRegion] = useState<string[]>([]);
   const [interfaceName, setInterface] = useState("");
   const [selectedGameId, setSelectedGameId] = useState(Number);
+  const [selectedGameVersion, setSelectedGameVersion] = useState<[string, string]>(["", ""]);
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
@@ -30,6 +31,18 @@ const AddApp = () : JSX.Element => {
 
   function handleInterfaceChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setInterface(e.target.value);
+  }
+
+  function handleGameChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    const gameId = parseInt(e.target.value);
+    setSelectedGameId(gameId);
+  
+    const selectedGame = games.find(game => game.gameId === gameId);
+    if (selectedGame) {
+      setSelectedGameVersion(selectedGame.gameVersion);
+    } else {
+      setSelectedGameVersion(['1.0', '1']);
+    }
   }
 
   function handleSubmit(e: any): void {
@@ -61,12 +74,13 @@ const AddApp = () : JSX.Element => {
         gameList: [
             {
                 gameId: selectedGameId,
-                gameVersion: ['1.0', '1']
+                gameVersion: selectedGameVersion 
             }
         ]
       }
       app.push(newApp);
       console.log(app);
+      console.log(games);
       setName("");
       setOkState(false);
       setSelectedJackpotId(0);
@@ -118,16 +132,24 @@ const AddApp = () : JSX.Element => {
         />
       </label>
       <br />
-      <label>Game List:
-      <p><strong>add options to choose from existing games</strong></p>
-        <input 
-          value={selectedGameId}
-          onChange={(e) => setSelectedGameId(parseInt(e.target.value))}
-        />
+      <label>
+        Game List:
+        {games.map((game: IGame) => (
+          <div key={game.gameId}>
+            <input
+              type="checkbox"
+              value={game.gameId}
+              onChange={(e) => handleGameChange(e)}
+              checked={selectedGameId === game.gameId}
+            />
+            <label>{game.gameName}</label>
+          </div>
+        ))}
       </label>
       <br />
       <button type="submit">Submit</button>
     </form>
+    
   );
 };
 

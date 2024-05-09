@@ -85,16 +85,16 @@ const AddMath = () : JSX.Element => {
       </label>
       <br />
       <label>
-        Percentage: 
+        Percentage <strong>(separate with space)</strong>: 
         <input
           type="text"
           onChange={(e) => handlePercentage(e)}
         />
       </label>
       <br />
-      <label>Percentage Set List:
+      <label>Percentage Set List <strong>(separate with space)</strong>:
         <input 
-          type="number"
+          type="text"
           onChange={(e) => handlePercentageSetList(e)}
         />
       </label>
