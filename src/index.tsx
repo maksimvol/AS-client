@@ -9,23 +9,28 @@ import GameSet from './pages/GameSet';
 import AddApp from './pages/AddApp';
 import AddJackpot from './pages/AddJackpot';
 import AddMath from './pages/AddMath';
-
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 
 export default function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="addGame" element={<AddGame />} />
-          <Route path="addApp" element={<AddApp />} />
-          <Route path="addJackpot" element={<AddJackpot />} />
-          <Route path="addMath" element={<AddMath />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="*" element={<NoPage />} />
-          <Route path="gameSet/:setId" element={<GameSet/>} />
-        </Route>
-      </Routes>
+      {/* <div className='app-box'> */}
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="addGame" element={<AddGame />} />
+            <Route path="addApp" element={<AddApp />} />
+            <Route path="addJackpot" element={<AddJackpot />} />
+            <Route path="addMath" element={<AddMath />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="*" element={<NoPage />} />
+            <Route path="gameSet/:setId" element={<GameSet/>} />
+          </Route>
+        </Routes>
+        <Footer />
+      {/* </div> */}
     </Router>
   );
 };
