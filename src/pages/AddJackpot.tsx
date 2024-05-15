@@ -71,7 +71,7 @@ const AddJackpot = () : JSX.Element => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='main'>
       <label>Jackpot Name:
         <input className={isOk ? "default" : "error"}
           type="text" 

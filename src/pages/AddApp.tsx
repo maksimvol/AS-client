@@ -98,7 +98,7 @@ const AddApp = () : JSX.Element => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='main'>
       <h1>Add App</h1>
       <label>App Name:
         <input className={isOk ? "default" : "error"}
