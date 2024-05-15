@@ -2,7 +2,7 @@ import GameComponent from '../components/Games/GameComponents';
 
 const Home = () => {
     return (
-      <div>
+      <div className='main'>
             <h1>Game Mix</h1>
             <div style={{ display: 'inline-block' }}>
                 <GameComponent />

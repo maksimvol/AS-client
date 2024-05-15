@@ -1,6 +1,6 @@
 import React from 'react';
 import './Navbar.css'
-import DLV_Image from './Images/logo_dlv.png'
+import TSI_Image from './Images/tsi.png'
 import { NavLink, useLocation } from "react-router-dom";
 import { scroll } from '../util'
 
@@ -12,7 +12,7 @@ const Navbar = () => {
     return (
         <div className='navbar'>
              <NavLink to="/" onClick={scroll}>
-                <img src={DLV_Image} alt='logo' className='logo'/>
+                <img src={TSI_Image} alt='logo' className='logo'/>
              </NavLink>
              <div className='navbarList'>
                 <div className='item'>
