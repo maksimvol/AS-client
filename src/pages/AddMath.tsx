@@ -1,102 +1,104 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IMath } from "../types/types";
-import { games } from "../components/Data/Games";
-import { jackpots } from "../components/Data/Jackpots";
+import { addMath, getMath } from "../util";
 import { gameMath } from "../components/Data/Math";
 
-const AddMath = () : JSX.Element => {   
+const AddMath = (): JSX.Element => {   
   const [name, setName] = useState("");
   const [isOk, setOkState] = useState(false);
   const [percentage, setPercentage] = useState<number[]>([]);
   const [percentageSetList, setPercentageSetList] = useState<number[]>([]);
+  const [math, setMath] = useState([])
+  const [selectedMath, setSelectedMath] = useState({})
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
-    // Number(e.target.value)
-    if (input){
+    if (input) {
       setName(input);
       setOkState(true);
-    } else{
+    } else {
       setName("");
       setOkState(false);
     }
   } 
 
+  useEffect(() => {
+    getMath()
+    .then(data => {
+      setMath(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching math: ", error);
+    })
+  },[])
+
   function handlePercentage(e: React.ChangeEvent<HTMLInputElement>): void {
     const percentage = e.target.value.split(' ').map(Number);
     setPercentage(percentage);
   }
+
   function handlePercentageSetList(e: React.ChangeEvent<HTMLInputElement>): void {
     const percentageSetList = e.target.value.split(' ').map(Number);
     setPercentageSetList(percentageSetList);
   }
 
-  function handleSubmit(e: any): void {
+  async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    const NameAlreadyExists = gameMath.find((e)=>e.mathName === name);
 
     const isEmptyName = !name;
     const isEmptyPercentage = !percentage;
-    const isEmptyPercentageSetList = !percentageSetList;
+    const isEmptyPercentageSetList = !percentageSetList
+    const NameAlreadyExists = gameMath.find((e) => e.mathName === name);
 
-    if(NameAlreadyExists){
-        alert("Game Name already exists! Please type different Game Name!");
-    } else if(isEmptyName || isEmptyPercentage || isEmptyPercentageSetList){
-        alert("Field Is Empty! Please Fill all the required fields!")
-        if(isEmptyName)
-          alert("Math Name")
-        else if(isEmptyPercentage)
-          alert("Percentage")
-        else if(isEmptyPercentageSetList)
+    if (NameAlreadyExists) {
+      alert("Game Name already exists! Please type a different Game Name!");
+    } else if (isEmptyName || isEmptyPercentage || isEmptyPercentageSetList) {
+      alert("Field is empty! Please fill all the required fields!");
+      if(isEmptyName){
+        alert("Math Name")
+      } else if(isEmptyPercentage){
+          alert("Percentage ")
+      } else if(isEmptyPercentageSetList){
           alert("Percentage Set List")
-    } else{
-      const newMath: IMath = {
-        mathName: name,
-        mathId: gameMath.length + 1, 
-        percentage: percentage,
-        percentageSetList: percentageSetList,
       }
-      gameMath.push(newMath);
-      console.log(gameMath);
-      setName("");
-      setOkState(false);
-      setPercentage([]);
-      setPercentageSetList([]);
+      } else{
+        try {
+          const newMath: IMath = {
+            mathName: name,
+            mathId: 0,
+            percentage: percentage,
+            percentageSetList: percentageSetList
+          };
+          await addMath(newMath);
+          console.log("Math added successfully");
+          setName("");
+          setOkState(false);
+          setPercentage([]);
+          setPercentageSetList([]);
+        } catch (error) {
+          console.error("Error adding math:", error);
+        }
+      }
     }
-  }
-
   return (
-    <form onSubmit={handleSubmit} className='main'>
-      <label>Math Name:
+    <form onSubmit={handleSubmit} className="main">
+      <label>
+        Math Name:
         <input className={isOk ? "default" : "error"}
-          type="text" 
+          type="text"
           value={name}
           onChange={(e) => checkCompatibility(e)}
         />
       </label>
       <br />
       <label>
-        Math Id: 
-        <input
-          type="number"
-          value={jackpots.length + 1}
-          disabled
-        />
+        Percentage <strong>(separate with space)</strong>:
+        <input type="text" onChange={(e) => handlePercentage(e)} />
       </label>
       <br />
       <label>
-        Percentage <strong>(separate with space)</strong>: 
-        <input
-          type="text"
-          onChange={(e) => handlePercentage(e)}
-        />
-      </label>
-      <br />
-      <label>Percentage Set List <strong>(separate with space)</strong>:
-        <input 
-          type="text"
-          onChange={(e) => handlePercentageSetList(e)}
-        />
+        Percentage Set List <strong>(separate with space)</strong>:
+        <input type="text" onChange={(e) => handlePercentageSetList(e)} />
       </label>
       <br />
       <button type="submit">Submit</button>

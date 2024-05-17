@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IApp, IGame } from "../types/types";
 import { games } from "../components/Data/Games";
 import { app } from "../components/Data/Apps";
-import AOS from "aos"
+// import AOS from "aos"
 
 const AddApp = () : JSX.Element => {   
   const [name, setName] = useState("");
@@ -12,13 +12,6 @@ const AddApp = () : JSX.Element => {
   const [interfaceName, setInterface] = useState("");
   const [selectedGameId, setSelectedGameId] = useState(Number);
   const [selectedGameVersion, setSelectedGameVersion] = useState<[string, string]>(["", ""]);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000
-    });
-    AOS.refresh();
-  });
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
