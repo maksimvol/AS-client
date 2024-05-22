@@ -1,11 +1,11 @@
 import React from 'react';
 import './Footer.css'
-import TSI_Image from './Images/tsi.png'
+import TSI_Gif from './Images/tsi_spinning.gif'
 
 const Footer = () => {
     return (
         <div className='footer'>
-            <center><img src={TSI_Image} alt='logo' className="logo"/></center>
+            <center><img src={TSI_Gif} alt='logo_gif' className="logo_gif"/></center>
         </div>
     )
 }

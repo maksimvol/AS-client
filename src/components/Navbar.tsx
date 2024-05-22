@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css'
 import TSI_Image from './Images/tsi.png'
 import { NavLink, useLocation } from "react-router-dom";
-import { scroll } from '../util'
+import { scroll } from '../util_app'
 
 const Navbar = () => {
     const location = useLocation();
     const category_path = location.pathname
-    const currentDate = new Date();
+    const [currentDateTime, setCurrentDateTime] = useState(new Date().toLocaleString());
+
+    useEffect(() => {
+        const intervalID = setInterval(() => {
+            setCurrentDateTime(new Date().toLocaleString());
+        }, 1000);
+
+        return () => clearInterval(intervalID);
+    }, []);
 
     return (
         <div className='navbar'>
@@ -52,7 +60,7 @@ const Navbar = () => {
                         </NavLink>
                 </div>
                 <div className="item">
-                    {currentDate.toLocaleString()}
+                    {currentDateTime}
                 </div>
             </div>
         </div>

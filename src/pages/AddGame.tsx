@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IGame, IMath } from "../types/types";
 import { games } from "../components/Data/Games";
 import { gameMath } from "../components/Data/Math";
+import { addGame, getGame } from "../util_game";
+import { getMath } from "../util_app";
 
 const AddGame = () : JSX.Element => {   
   const [name, setName] = useState("");
@@ -12,11 +14,33 @@ const AddGame = () : JSX.Element => {
   const [freegames, setFreegames] = useState(false);
   const [gamble, setGamble] = useState(false);
   const [jackpot, setJackpot] = useState(false);
-  const [selectedMathId, setSelectedMathId] = useState(Number);
+  const [selectedMathId, setSelectedMathId] = useState<number | null>(null);
+
+  const [game, setGame] = useState<IGame[]>([])
+  const [selectedGame, setSelectedGame] = useState({})
+
+  const [math, setMath] = useState<IMath[]>([]); 
+
+  useEffect(() => {
+    getGame()
+    .then(data => {
+      setGame(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching game: ", error);
+    })
+
+    getMath()
+    .then(data => {
+      setMath(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching math: ", error);
+    })
+  },[])
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
-    // Number(e.target.value)
     if (input){
       setName(input);
       setOkState(true);
@@ -25,21 +49,22 @@ const AddGame = () : JSX.Element => {
       setOkState(false);
     }
   } 
-  function handleSubmit(e: any): void {
+  async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    const NameAlreadyExists = games.find((e)=>e.gameName === name);
-    const IdAlreadyExists = games.find((e)=>e.systemId === systemId);
+    const NameAlreadyExists = game.find((e)=>e.gameName === name);
+    const IdAlreadyExists = game.find((e)=>e.systemId === systemId);
 
     const isEmptyName = !name;
     const isEmptySystemId = !systemId;
-    const isEmptyMaxWLCMain = !maxWLCMain;
-    const isEmptyMaxWLCFreegames = !maxWLCFreegames;
+    const isEmptyMaxWLCMain = maxWLCMain <= 0;
+    const isEmptyMaxWLCFreegames = maxWLCFreegames <= 0;
+    const isEmptySelectedMathId = !selectedMathId
 
     if(NameAlreadyExists){
         alert("Game Name already exists! Please type different Game Name!");
     } else if(IdAlreadyExists){
         alert("System Id already exists! Please type different System Id!");
-    } else if(isEmptyName || isEmptySystemId || isEmptyMaxWLCMain || isEmptyMaxWLCFreegames){
+    } else if(isEmptyName || isEmptySystemId || isEmptyMaxWLCMain || isEmptyMaxWLCFreegames || isEmptySelectedMathId){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
           alert("Game Name")
@@ -49,34 +74,42 @@ const AddGame = () : JSX.Element => {
           alert("Max WLC Main")
         else if(isEmptyMaxWLCFreegames)
           alert("Max WLC Freegames")
+        else if(isEmptySelectedMathId)
+          alert("Math Id")
     } else{
-      const newGame: IGame = {
-        gameName: name,
-        gameId: games.length + 1, 
-        systemId: systemId,
-        maxWLCMain: maxWLCMain,
-        maxWLCFreegames: maxWLCFreegames,
-        freegames: freegames,
-        gamble: gamble,
-        jackpot: jackpot,
-        mathId: selectedMathId,
-        gameVersion: ['1.0', '1']
+      try{
+        const newGame: IGame = {
+          gameName: name,
+          gameId: 0,
+          systemId: systemId,
+          maxWLCMain: maxWLCMain,
+          maxWLCFreegames: maxWLCFreegames,
+          freegames: freegames,
+          gamble: gamble,
+          jackpot: jackpot,
+          mathId: selectedMathId || 0,
+          gameVersion: ['1.0', '1']
+        }
+        await addGame(newGame);
+        console.log("Game added successfully");
+        setGame([...game, newGame]);
+        setName("");
+        setOkState(false);
+        setSystemId(0);
+        setMaxWLCMain(0);
+        setMaxWLCFreegames(0);
+        setFreegames(false);
+        setGamble(false);
+        setJackpot(false);
+        setSelectedMathId(0);
+      } catch (error) {
+        console.error("Error adding game:", error);
       }
-      games.push(newGame);
-      console.log(games);
-      setName("");
-      setOkState(false);
-      setMaxWLCMain(0);
-      setMaxWLCFreegames(0);
-      setFreegames(false);
-      setGamble(false);
-      setJackpot(false);
-      setSelectedMathId(0);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='main'>
       <label>Game Name:
         <input className={isOk ? "default" : "error"}
           type="text" 
@@ -98,6 +131,7 @@ const AddGame = () : JSX.Element => {
         System Id: 
         <input
           type="number"
+          value={systemId}
           onChange={(e) => setSystemId(parseInt(e.target.value))}
         />
       </label>
@@ -105,6 +139,7 @@ const AddGame = () : JSX.Element => {
       <label>Max WLC Main:
         <input 
           type="number"
+          value={maxWLCMain}
           onChange={(e) => setMaxWLCMain(parseInt(e.target.value))}
         />
       </label>
@@ -112,6 +147,7 @@ const AddGame = () : JSX.Element => {
       <label>Max WLC FreeGames:
         <input 
           type="number"
+          value={maxWLCFreegames}
           onChange={(e) => setMaxWLCFreegames(parseInt(e.target.value))}
         />
       </label>
@@ -142,14 +178,15 @@ const AddGame = () : JSX.Element => {
       <br />
       <label>Math Id:
         <select 
-          value={selectedMathId}
-          onChange={(e) => setSelectedMathId(parseInt(e.target.value))}
+          value={selectedMathId ? selectedMathId.toString() : ''} 
+          onChange={(e) => setSelectedMathId(parseInt(e.target.value))} 
         >
-        {gameMath.map((math: IMath) => (
-          <option key={math.mathId} value={math.mathId}>
-            {math.mathName}
-          </option>
-        ))}
+          <option value="">Select Math</option>
+          {math.map((mathOption) => (
+            <option key={mathOption.mathId} value={mathOption.mathId.toString()}>
+              {mathOption.mathName}
+            </option>
+          ))}
         </select>
       </label>
       <br />
@@ -162,6 +199,7 @@ const AddGame = () : JSX.Element => {
       </label>
       <br />
       <button type="submit">Submit</button>
+      {/* <button type="submit" disabled={!selectedMathId}>Submit</button> */}
     </form>
   );
 };

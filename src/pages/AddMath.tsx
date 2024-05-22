@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { IMath } from "../types/types";
-import { addMath, getMath } from "../util";
-import { gameMath } from "../components/Data/Math";
+import { addMath, getMath } from "../util_app";
 
 const AddMath = (): JSX.Element => {   
   const [name, setName] = useState("");
   const [isOk, setOkState] = useState(false);
   const [percentage, setPercentage] = useState<number[]>([]);
   const [percentageSetList, setPercentageSetList] = useState<number[]>([]);
-  const [math, setMath] = useState([])
-  const [selectedMath, setSelectedMath] = useState({})
 
-  function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
-    const input = e.target.value;
-    if (input) {
-      setName(input);
-      setOkState(true);
-    } else {
-      setName("");
-      setOkState(false);
-    }
-  } 
+  const [math, setMath] = useState<IMath[]>([])
+  const [selectedMath, setSelectedMath] = useState({})
 
   useEffect(() => {
     getMath()
@@ -32,13 +21,24 @@ const AddMath = (): JSX.Element => {
     })
   },[])
 
+  function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
+    const input = e.target.value;
+    if (input) {
+      setName(input);
+      setOkState(true);
+    } else {
+      setName("");
+      setOkState(false);
+    }
+  }
+
   function handlePercentage(e: React.ChangeEvent<HTMLInputElement>): void {
-    const percentage = e.target.value.split(' ').map(Number);
+    const percentage = e.target.value.split(' ').map(Number).filter(value => !isNaN(value));
     setPercentage(percentage);
   }
 
   function handlePercentageSetList(e: React.ChangeEvent<HTMLInputElement>): void {
-    const percentageSetList = e.target.value.split(' ').map(Number);
+    const percentageSetList = e.target.value.split(' ').map(Number).filter(value => !isNaN(value));
     setPercentageSetList(percentageSetList);
   }
 
@@ -46,9 +46,9 @@ const AddMath = (): JSX.Element => {
     e.preventDefault();
 
     const isEmptyName = !name;
-    const isEmptyPercentage = !percentage;
-    const isEmptyPercentageSetList = !percentageSetList
-    const NameAlreadyExists = gameMath.find((e) => e.mathName === name);
+    const isEmptyPercentage = percentage.length === 0;
+    const isEmptyPercentageSetList = percentageSetList.length === 0
+    const NameAlreadyExists = math.find((e) => e.mathName === name);
 
     if (NameAlreadyExists) {
       alert("Game Name already exists! Please type a different Game Name!");
@@ -71,6 +71,7 @@ const AddMath = (): JSX.Element => {
           };
           await addMath(newMath);
           console.log("Math added successfully");
+          setMath([...math, newMath]);
           setName("");
           setOkState(false);
           setPercentage([]);
@@ -93,12 +94,16 @@ const AddMath = (): JSX.Element => {
       <br />
       <label>
         Percentage <strong>(separate with space)</strong>:
-        <input type="text" onChange={(e) => handlePercentage(e)} />
+        <input type="text" 
+        value={percentage.join(' ')}
+        onChange={(e) => handlePercentage(e)} />
       </label>
       <br />
       <label>
         Percentage Set List <strong>(separate with space)</strong>:
-        <input type="text" onChange={(e) => handlePercentageSetList(e)} />
+        <input type="text" 
+        value={percentageSetList.join(' ')}
+        onChange={(e) => handlePercentageSetList(e)} />
       </label>
       <br />
       <button type="submit">Submit</button>

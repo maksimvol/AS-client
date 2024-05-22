@@ -27,6 +27,9 @@
   .logo {
     height: 100px;
   }
+  .logo_gif {
+    height: 200px;
+  }
 .main{
   height: 100vh;
 }

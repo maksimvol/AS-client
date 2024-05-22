@@ -8,17 +8,19 @@ export const scroll = () => {
     })
 }
 // API functions
-export const addMath = (newMath) => {
-    return axios.post(`http://localhost:3001/maths`, newMath)
+// Adding Record
+export const addGame = (newGame) => {
+    return axios.post(`http://localhost:3001/games`, newGame)
     
     .then(response => console.log(response.data))
     .catch((error) => {
-        console.error('Error adding math:', error);
+        console.error('Error adding game:', error);
     })
 }
 
-export const getMath = () => {
-    return axios.get(`http://localhost:3001/maths`)
+// Getting Record
+export const getGame = () => {
+    return axios.get(`http://localhost:3001/games`)
     .then(response => {
         console.log(response.data)
         if(response.status === 200) {            
@@ -31,8 +33,10 @@ export const getMath = () => {
         console.log(error);
     })
 }
-export const getMathById = () => {
-    return axios.get(`http://localhost:3001/maths/2`)
+
+// Getting Record by Id
+export const getGameById = () => {
+    return axios.get(`http://localhost:3001/games/2`)
     .then(response => {
         return response.data;
     })
