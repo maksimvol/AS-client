@@ -42,7 +42,7 @@ export interface IApp {
     appName: string;
     jackpotId: number;
     jackpotVersion: [string, string];
-    region: string[];
+    region: string;
     interface: string;
     gameList: {
         gameId: number;

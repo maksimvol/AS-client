@@ -9,19 +9,18 @@ export const scroll = () => {
 }
 // API functions
 // Adding Record
-export const addApp = (newApp) => {
-    // console.log("client", newApp)
-    return axios.post(`http://localhost:3001/apps`, newApp)
+export const addMath = (newMath) => {
+    return axios.post(`http://localhost:3001/maths`, newMath)
     
     .then(response => console.log(response.data))
     .catch((error) => {
-        console.error('Error adding app:', error);
+        console.error('Error adding math:', error);
     })
 }
 
 // Getting Record
-export const getApp = () => {
-    return axios.get(`http://localhost:3001/apps`)
+export const getMath = () => {
+    return axios.get(`http://localhost:3001/maths`)
     .then(response => {
         console.log(response.data)
         if(response.status === 200) {
@@ -36,8 +35,8 @@ export const getApp = () => {
 }
 
 // Getting Record by Id
-export const getAppById = () => {
-    return axios.get(`http://localhost:3001/apps/2`)
+export const getMathById = () => {
+    return axios.get(`http://localhost:3001/maths/2`)
     .then(response => {
         return response.data;
     })

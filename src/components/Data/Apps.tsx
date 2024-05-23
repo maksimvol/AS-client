@@ -5,7 +5,7 @@ export const app: IApp[] = [{
     appName: 'testApp1',
     jackpotId: 1,
     jackpotVersion: ['1.0','1'],// move to build set history
-    region: ['Columbia', 'Peru'], // move to build set history
+    region: 'Columbia', // move to build set history
     interface: 'testInterface',
     gameList:[{
         gameId: 1,
@@ -18,7 +18,7 @@ export const app: IApp[] = [{
     appName: 'testApp2',
     jackpotId: 2,
     jackpotVersion: ['1.0','1'],// move to build set history
-    region: ['Columbia'], // move to build set history
+    region: 'Columbia', // move to build set history
     interface: 'testInterface',
     gameList:[{
         gameId: 1,

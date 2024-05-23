@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IMath } from "../types/types";
-import { addMath, getMath } from "../util_app";
+import { addMath, getMath } from "../util_math";
 
 const AddMath = (): JSX.Element => {   
   const [name, setName] = useState("");

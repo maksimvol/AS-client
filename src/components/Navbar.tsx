@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Navbar.css'
 import TSI_Image from './Images/tsi.png'
 import { NavLink, useLocation } from "react-router-dom";
-import { scroll } from '../util_app'
+import { scroll } from '../util_math'
 
 const Navbar = () => {
     const location = useLocation();

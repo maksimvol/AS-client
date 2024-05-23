@@ -2,16 +2,39 @@ import React, { useState, useEffect } from "react";
 import { IApp, IGame } from "../types/types";
 import { games } from "../components/Data/Games";
 import { app } from "../components/Data/Apps";
+import { addApp, getApp } from "../util_app";
+import { getGame } from "../util_game";
 // import AOS from "aos"
 
 const AddApp = () : JSX.Element => {   
   const [name, setName] = useState("");
   const [isOk, setOkState] = useState(false);
   const [selectedJackpotId, setSelectedJackpotId] = useState(0);
-  const [region, setRegion] = useState<string[]>([]);
+  const [region, setRegion] = useState<string>("");
   const [interfaceName, setInterface] = useState("");
   const [selectedGameId, setSelectedGameId] = useState(Number);
   const [selectedGameVersion, setSelectedGameVersion] = useState<[string, string]>(["", ""]);
+
+  const [app, setApp] = useState<IApp[]>([])
+  const [game, setGame] = useState<IGame[]>([])
+
+  useEffect(() => {
+    getApp()
+    .then(data => {
+      setApp(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching app: ", error);
+    })
+
+    getGame()
+    .then(data => {
+      setGame(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching app: ", error);
+    })
+  },[])
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
@@ -27,7 +50,7 @@ const AddApp = () : JSX.Element => {
 
   function handleRegionChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const regions = e.target.value.split(' ');
-    setRegion(regions);
+    setRegion(e.target.value);
   }
 
   function handleInterfaceChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -46,7 +69,7 @@ const AddApp = () : JSX.Element => {
     }
   }
 
-  function handleSubmit(e: any): void {
+  async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
     const NameAlreadyExists = app.find((e)=>e.appName === name);
 
@@ -55,7 +78,7 @@ const AddApp = () : JSX.Element => {
     const isEmptyInterface = !interfaceName;
 
     if(NameAlreadyExists){
-        alert("Game Name already exists! Please type different Game Name!");
+        alert("App Name already exists! Please type different App Name!");
     } else if(isEmptyName || isEmptyRegion || isEmptyInterface){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
@@ -65,28 +88,34 @@ const AddApp = () : JSX.Element => {
         else if(isEmptyInterface)
             alert("Interface")
     } else{
-      const newApp: IApp = {
-        appName: name,
-        gameSetId: app.length + 1, 
-        jackpotId: selectedJackpotId,
-        jackpotVersion: ['1.0', '1'],
-        region: region,
-        interface: interfaceName,
-        gameList: [
-            {
-                gameId: selectedGameId,
-                gameVersion: selectedGameVersion 
-            }
-        ]
+      try{
+ 
+        const newApp: IApp = {
+          appName: name,
+          gameSetId: 0, 
+          jackpotId: selectedJackpotId,
+          jackpotVersion: ['1.0', '1'],
+          region: region,
+          interface: interfaceName,
+          gameList: [
+              {
+                  gameId: selectedGameId,
+                  gameVersion: selectedGameVersion 
+              }
+          ]
+        }
+        await addApp(newApp);
+        console.log("App added successfully");
+        setApp([...app, newApp]);
+        setName("");
+        setOkState(false);
+        setSelectedJackpotId(0);
+        setRegion("");
+        setInterface("");
+        setSelectedGameId(0);
+      } catch (error) {
+        console.error("Error adding app:", error);
       }
-      app.push(newApp);
-      console.log(app);
-      setName("");
-      setOkState(false);
-      setSelectedJackpotId(0);
-      setRegion([]);
-      setInterface("");
-      setSelectedGameId(0);
     }
   }
 
@@ -120,7 +149,7 @@ const AddApp = () : JSX.Element => {
       <label>Region:
         <input 
           type="text" 
-          value={region.join(' ')}
+          value={region}
           onChange={(e) => handleRegionChange(e)}
         />
       </label>
@@ -133,24 +162,22 @@ const AddApp = () : JSX.Element => {
         />
       </label>
       <br />
-      <label>
-        Game List:
-        {games.map((game: IGame) => (
-          <div key={game.gameId}>
-            <input
-              type="checkbox"
-              value={game.gameId}
-              onChange={(e) => handleGameChange(e)}
-              checked={selectedGameId === game.gameId}
-            />
-            <label>{game.gameName}</label>
-          </div>
-        ))}
+      <label>Game List:
+        <select
+          value={selectedGameId ? selectedGameId.toString() : ''} 
+          onChange={(e) => setSelectedGameId(parseInt(e.target.value))} 
+        >
+          <option value="">Select Game</option>
+          {game.map((gameOption) => (
+            <option key={gameOption.gameId} value={gameOption.gameId.toString()}>
+              {gameOption.gameName}
+            </option>
+          ))}
+        </select>
       </label>
       <br />
       <button type="submit">Submit</button>
     </form>
-    
   );
 };
 

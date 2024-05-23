@@ -3,7 +3,7 @@ import { IGame, IMath } from "../types/types";
 import { games } from "../components/Data/Games";
 import { gameMath } from "../components/Data/Math";
 import { addGame, getGame } from "../util_game";
-import { getMath } from "../util_app";
+import { getMath } from "../util_math";
 
 const AddGame = () : JSX.Element => {   
   const [name, setName] = useState("");
