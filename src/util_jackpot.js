@@ -3,18 +3,18 @@ import axios from "axios"
 
 // API functions
 // Adding Record
-export const addGame = (newGame) => {
-    return axios.post(`http://localhost:3001/games`, newGame)
+export const addJackpot = (newJackpot) => {
+    return axios.post(`http://localhost:3001/jackpots`, newJackpot)
     
     .then(response => console.log(response.data))
     .catch((error) => {
-        console.error('Error adding game:', error);
+        console.error('Error adding jackpot:', error);
     })
 }
 
 // Getting Record
-export const getGame = () => {
-    return axios.get(`http://localhost:3001/games`)
+export const getJackpot = () => {
+    return axios.get(`http://localhost:3001/jackpots`)
     .then(response => {
         console.log(response.data)
         if(response.status === 200) {            
@@ -29,8 +29,8 @@ export const getGame = () => {
 }
 
 // Getting Record by Id
-export const getGameById = () => {
-    return axios.get(`http://localhost:3001/games/2`)
+export const getJackpotById = () => {
+    return axios.get(`http://localhost:3001/jackpots/2`)
     .then(response => {
         return response.data;
     })

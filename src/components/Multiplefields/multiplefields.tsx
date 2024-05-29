@@ -5,7 +5,7 @@ const multipleFields: React.FC = (data:any, setvalue:any) => {
     }
 
     return(<>
-        <label>Chose game: &nbsp;</label>
+        <label>Choose game: &nbsp;</label>
         <select name="selectitems" onChange={(e)=>getFieldValue(e)}>
             {data.map((item:any, index:number)=><option value={item} key={item+index}>item</option>)}
         </select>

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { IJackpot } from "../types/types";
+import React, { useEffect, useState } from "react";
+import { IGame, IJackpot } from "../types/types";
 import { games } from "../components/Data/Games";
 import { jackpots } from "../components/Data/Jackpots";
+import { addJackpot, getJackpot } from "../util_jackpot";
+import { getGame } from "../util_game";
 
 const AddJackpot = () : JSX.Element => {   
   const [name, setName] = useState("");
@@ -9,6 +11,29 @@ const AddJackpot = () : JSX.Element => {
   const [jackpotType, setJackpotType] = useState<string[]>([]);
   const [percentageSetList, setPercentageSetList] = useState<number[]>([]);
   const [gameList, setGameList] = useState<number[]>([]);
+
+  const [selectedGameId, setSelectedGameId] = useState(Number);
+
+  const [jackpot, setJackpot] = useState<IJackpot[]>([])
+  const [game, setGame] = useState<IGame[]>([])
+
+  useEffect(() => {
+    getJackpot()
+    .then(data => {
+      setJackpot(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching jackpot: ", error);
+    })
+
+    getGame()
+    .then(data => {
+      setGame(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching game: ", error);
+    })
+  },[])
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
@@ -31,9 +56,9 @@ const AddJackpot = () : JSX.Element => {
     setPercentageSetList(percentageSetList);
   }
 
-  function handleSubmit(e: any): void {
+  async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    const NameAlreadyExists = jackpots.find((e)=>e.jackpotName === name);
+    const NameAlreadyExists = jackpot.find((e)=>e.jackpotName === name);
 
     const isEmptyName = !name;
     const isEmptyJackpotType = !jackpotType;
@@ -53,25 +78,31 @@ const AddJackpot = () : JSX.Element => {
         else if(isEmptyGameList)
           alert("Game List")
     } else{
-      const newJackpot: IJackpot = {
-        jackpotName: name,
-        jackpotId: jackpots.length + 1, 
-        jackpotType: jackpotType,
-        percentageSetList: percentageSetList,
-        gameList: gameList,
+      try{
+        const newJackpot: IJackpot = {
+          jackpotName: name,
+          jackpotId: jackpots.length + 1, 
+          jackpotType: jackpotType,
+          percentageSetList: percentageSetList,
+          gameList: gameList,
+        }
+        await addJackpot(newJackpot)
+        console.log("Jackpot added successfully");
+        setJackpot([...jackpot, newJackpot]);
+        setName("");
+        setOkState(false);
+        setJackpotType([]);
+        setPercentageSetList([]);
+        setGameList([]);
+      } catch (error) {
+        console.error("Error adding jackpot:", error);
       }
-      jackpots.push(newJackpot);
-      console.log(games);
-      setName("");
-      setOkState(false);
-      setJackpotType([]);
-      setPercentageSetList([]);
-      setGameList([]);
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className='main'>
+      <h1>Add Jackpot</h1>
       <label>Jackpot Name:
         <input className={isOk ? "default" : "error"}
           type="text" 
@@ -105,13 +136,23 @@ const AddJackpot = () : JSX.Element => {
       </label>
       <br />
       <label>Game List:
-      <p><strong>add options to choose from existing games</strong></p>
-        <input 
-          type="number"
-        />
+        <select
+          value={selectedGameId ? selectedGameId.toString() : ''} 
+          onChange={(e) => setSelectedGameId(parseInt(e.target.value))} 
+        >
+          <option value="">Select Game</option>
+
+          {game.filter((gameOption) => gameOption.jackpot).map((gameOption) => (
+            <option key={gameOption.gameId} value={gameOption.gameId.toString()}>
+              {gameOption.gameName}
+            </option>
+          ))}
+        </select>
       </label>
       <br />
       <button type="submit">Submit</button>
+      <br />
+      <strong>add multiple game selection to game list</strong>
     </form>
   );
 };

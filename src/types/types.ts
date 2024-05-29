@@ -15,6 +15,9 @@ export interface IGame {
 //     mathName: string;
 //     [n:string]: boolean
 // }
+export interface IGameAndAppList extends IGame{
+    appNameList: [string]
+}
 
 export interface IMath {
     mathId: number;

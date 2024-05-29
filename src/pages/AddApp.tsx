@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { IApp, IGame } from "../types/types";
+import { IApp, IGame, IJackpot } from "../types/types";
 import { games } from "../components/Data/Games";
 import { app } from "../components/Data/Apps";
 import { addApp, getApp } from "../util_app";
 import { getGame } from "../util_game";
+import { getJackpot } from "../util_jackpot";
 // import AOS from "aos"
 
 const AddApp = () : JSX.Element => {   
   const [name, setName] = useState("");
   const [isOk, setOkState] = useState(false);
-  const [selectedJackpotId, setSelectedJackpotId] = useState(0);
+  const [selectedJackpotId, setSelectedJackpotId] = useState(Number);
   const [region, setRegion] = useState<string>("");
   const [interfaceName, setInterface] = useState("");
   const [selectedGameId, setSelectedGameId] = useState(Number);
@@ -17,6 +18,7 @@ const AddApp = () : JSX.Element => {
 
   const [app, setApp] = useState<IApp[]>([])
   const [game, setGame] = useState<IGame[]>([])
+  const [jackpot, setJackpot] = useState<IJackpot[]>([])
 
   useEffect(() => {
     getApp()
@@ -32,7 +34,15 @@ const AddApp = () : JSX.Element => {
       setGame(data)      
     })
     .catch(error => {
-      console.log("Error fetching app: ", error);
+      console.log("Error fetching game: ", error);
+    })
+
+    getJackpot()
+    .then(data => {
+      setJackpot(data)      
+    })
+    .catch(error => {
+      console.log("Error fetching jackpot: ", error);
     })
   },[])
 
@@ -89,7 +99,6 @@ const AddApp = () : JSX.Element => {
             alert("Interface")
     } else{
       try{
- 
         const newApp: IApp = {
           appName: name,
           gameSetId: 0, 
@@ -131,7 +140,7 @@ const AddApp = () : JSX.Element => {
       </label>
       <br />
       <label>
-        Game Set Id: 
+        App Id: 
         <input
           type="number"
           value={games.length + 1}
@@ -139,11 +148,18 @@ const AddApp = () : JSX.Element => {
         />
       </label>
       <br />
-      <label>Jackpot Id:
-        <input 
-          value={selectedJackpotId}
-          onChange={(e) => setSelectedJackpotId(parseInt(e.target.value))}
-        />
+      <label>Jackpot Name:
+        <select
+          value={selectedJackpotId ? selectedJackpotId.toString() : ''} 
+          onChange={(e) => setSelectedJackpotId(parseInt(e.target.value))} 
+        >
+          <option value="">Select Jackpot</option>
+          {jackpot.map((jackpotOption) => (
+            <option key={jackpotOption.jackpotId} value={jackpotOption.jackpotId.toString()}>
+              {jackpotOption.jackpotName}
+            </option>
+          ))}
+        </select>
       </label>
       <br />
       <label>Region:
@@ -177,6 +193,8 @@ const AddApp = () : JSX.Element => {
       </label>
       <br />
       <button type="submit">Submit</button>
+      <br />
+      <strong>add multiple game selection to game list option</strong>
     </form>
   );
 };

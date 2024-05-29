@@ -83,6 +83,7 @@ const AddMath = (): JSX.Element => {
     }
   return (
     <form onSubmit={handleSubmit} className="main">
+      <h1>Add Math</h1>
       <label>
         Math Name:
         <input className={isOk ? "default" : "error"}

@@ -110,6 +110,7 @@ const AddGame = () : JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className='main'>
+      <h1>Add Game</h1>
       <label>Game Name:
         <input className={isOk ? "default" : "error"}
           type="text" 
