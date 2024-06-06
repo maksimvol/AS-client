@@ -9,12 +9,14 @@ export interface IGame {
     jackpot: boolean;
     mathId: number;
     gameVersion: [string, string];    
+    // [key: string]: any;
 }
 
-// export interface IGameModed extends IGame{
-//     mathName: string;
-//     [n:string]: boolean
-// }
+export interface IGameModed extends IGame{
+    // mathName: string;
+    // [n:string]: boolean
+    [key: string]: any;
+}
 export interface IGameAndAppList extends IGame{
     appNameList: [string]
 }

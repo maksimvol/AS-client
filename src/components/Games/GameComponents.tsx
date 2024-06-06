@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DisplayGameInfo from "./DisplayGameComponents";
 import GameHeaders from "./GameHeaders";
-import { games } from "../Data/Games";
 import { CompoundTableHeaders } from "../Data/Headers";
 import { gameMath } from "../Data/Math";
-import { app } from "../Data/Apps";
-import { IApp, IGame } from "../../types/types";
+import { IApp, IGameModed } from "../../types/types";
 import { getGame } from "../../util_game";
 import { getApp } from "../../util_app";
 // import { IGameModed } from "../../types/types";
 
 const GameComponent: React.FC = () => {
 
-    const [gameList, setGameList] = useState<IGame[]>([])
+    const [gameList, setGameList] = useState<IGameModed[]>([])
     const [appList, setAppList] = useState<IApp[]>([])
 
     useEffect(() => {
@@ -53,14 +51,14 @@ const GameComponent: React.FC = () => {
     })
 
     const processedGames = gameList.map(game => {
-        const mathName = gameMath.find(e => e.mathId === game.mathId)?.mathName ?? 'No Math Attached'
+        game['MathName'] = gameMath.find(e => e.mathId === game.mathId)?.mathName ?? 'No Math Attached'
 
         appList.forEach((appList)=>{
             let n = 'app' + appList.gameSetId;
             game[n] =  appList.gameList.find((e)=>e.gameId === game.gameId) ? true : false;
         });
         
-        return {...game, mathName}
+        return {...game}
     })
     console.log("processedGames", processedGames)
     return (

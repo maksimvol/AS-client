@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { IApp, IGame, IJackpot } from "../types/types";
 import { games } from "../components/Data/Games";
-import { app } from "../components/Data/Apps";
 import { addApp, getApp } from "../util_app";
 import { getGame } from "../util_game";
 import { getJackpot } from "../util_jackpot";
-// import AOS from "aos"
 
 const AddApp = () : JSX.Element => {   
   const [name, setName] = useState("");
@@ -188,6 +186,7 @@ const AddApp = () : JSX.Element => {
             <option key={gameOption.gameId} value={gameOption.gameId.toString()}>
               {gameOption.gameName}
             </option>
+
           ))}
         </select>
       </label>
