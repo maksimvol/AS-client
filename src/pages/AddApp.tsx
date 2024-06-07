@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Select from 'react-select'
 import { IApp, IGame, IJackpot } from "../types/types";
-import { games } from "../components/Data/Games";
 import { addApp, getApp } from "../util_app";
 import { getGame } from "../util_game";
 import { getJackpot } from "../util_jackpot";
@@ -11,7 +11,7 @@ const AddApp = () : JSX.Element => {
   const [selectedJackpotId, setSelectedJackpotId] = useState(Number);
   const [region, setRegion] = useState<string>("");
   const [interfaceName, setInterface] = useState("");
-  const [selectedGameId, setSelectedGameId] = useState(Number);
+  const [selectedGameId, setSelectedGameId] = useState<number[]>([]);
   const [selectedGameVersion, setSelectedGameVersion] = useState<[string, string]>(["", ""]);
 
   const [app, setApp] = useState<IApp[]>([])
@@ -46,7 +46,6 @@ const AddApp = () : JSX.Element => {
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
-    // Number(e.target.value)
     if (input){
       setName(input);
       setOkState(true);
@@ -57,24 +56,11 @@ const AddApp = () : JSX.Element => {
   } 
 
   function handleRegionChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    const regions = e.target.value.split(' ');
     setRegion(e.target.value);
   }
 
   function handleInterfaceChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setInterface(e.target.value);
-  }
-
-  function handleGameChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    const gameId = parseInt(e.target.value);
-    setSelectedGameId(gameId);
-  
-    const selectedGame = games.find(game => game.gameId === gameId);
-    if (selectedGame) {
-      setSelectedGameVersion(selectedGame.gameVersion);
-    } else {
-      setSelectedGameVersion(['1.0', '1']);
-    }
   }
 
   async function handleSubmit(e: any): Promise<void> {
@@ -84,10 +70,12 @@ const AddApp = () : JSX.Element => {
     const isEmptyName = !name;
     const isEmptyRegion = region.length === 0;
     const isEmptyInterface = !interfaceName;
+    const isEmptyGameList = selectedGameId.length === 0;
+    const isEmptyJackpot = !selectedJackpotId
 
     if(NameAlreadyExists){
         alert("App Name already exists! Please type different App Name!");
-    } else if(isEmptyName || isEmptyRegion || isEmptyInterface){
+    } else if(isEmptyName || isEmptyRegion || isEmptyInterface || isEmptyGameList){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
             alert("App Name")
@@ -95,6 +83,8 @@ const AddApp = () : JSX.Element => {
             alert("Region")
         else if(isEmptyInterface)
             alert("Interface")
+        else if(isEmptyGameList)
+            alert("Game List")
     } else{
       try{
         const newApp: IApp = {
@@ -104,12 +94,10 @@ const AddApp = () : JSX.Element => {
           jackpotVersion: ['1.0', '1'],
           region: region,
           interface: interfaceName,
-          gameList: [
-              {
-                  gameId: selectedGameId,
-                  gameVersion: selectedGameVersion 
-              }
-          ]
+          gameList: selectedGameId.map(gameId => ({
+            gameId: gameId,
+            gameVersion: selectedGameVersion 
+          }))
         }
         await addApp(newApp);
         console.log("App added successfully");
@@ -119,81 +107,84 @@ const AddApp = () : JSX.Element => {
         setSelectedJackpotId(0);
         setRegion("");
         setInterface("");
-        setSelectedGameId(0);
+        setSelectedGameId([]);
       } catch (error) {
         console.error("Error adding app:", error);
       }
     }
   }
 
+  const gamesMultiSelect = game.map((gameOption) => (
+    {value: gameOption.gameId.toString(), label: gameOption.gameName}
+  ))
+  // const jackpotSelect = jackpot.map((jackpotOption) => (
+  //   {value:jackpotOption.jackpotId.toString(), label: jackpotOption.jackpotName}
+  // ))
+
+  const jackpotSelect = [
+    {value: "0", label: "No Jackpot"}, 
+    ...jackpot.map((jackpotOption) => (
+      {value:jackpotOption.jackpotId.toString(), label: jackpotOption.jackpotName}))
+  ]
+
   return (
     <form onSubmit={handleSubmit} className='main'>
       <h1>Add App</h1>
-      <label>App Name:
-        <input className={isOk ? "default" : "error"}
+      <label>App Name:</label>
+      <br />
+        <input className="label"
           type="text" 
           value={name}
           onChange={(e) => checkCompatibility(e)}
         />
-      </label>
       <br />
-      <label>
-        App Id: 
-        <input
+      <label>App Id:</label>
+      <br />
+        <input className="label"
           type="number"
-          value={games.length + 1}
+          value={game.length + 1}
           disabled
         />
-      </label>
       <br />
-      <label>Jackpot Name:
-        <select
-          value={selectedJackpotId ? selectedJackpotId.toString() : ''} 
-          onChange={(e) => setSelectedJackpotId(parseInt(e.target.value))} 
-        >
-          <option value="">Select Jackpot</option>
-          {jackpot.map((jackpotOption) => (
-            <option key={jackpotOption.jackpotId} value={jackpotOption.jackpotId.toString()}>
-              {jackpotOption.jackpotName}
-            </option>
-          ))}
-        </select>
-      </label>
+      <label>Jackpot Name:</label>
+          <Select className="label"
+            options={jackpotSelect} 
+            onChange={(selectedOptions) => {
+              if( selectedOptions) {
+                setSelectedJackpotId(parseInt(selectedOptions?.value));
+              } else {
+                setSelectedJackpotId(0);
+              }
+            }}  
+          />
       <br />
-      <label>Region:
-        <input 
+      <label>Region:</label>
+      <br />
+        <input className="label"
           type="text" 
           value={region}
           onChange={(e) => handleRegionChange(e)}
         />
-      </label>
       <br />
-      <label>Interface:
-        <input 
+      <label>Interface:</label>
+      <br />
+        <input className="label"
           type="text" 
           value={interfaceName}
           onChange={(e) => handleInterfaceChange(e)}
         />
-      </label>
       <br />
-      <label>Game List:
-        <select
-          value={selectedGameId ? selectedGameId.toString() : ''} 
-          onChange={(e) => setSelectedGameId(parseInt(e.target.value))} 
-        >
-          <option value="">Select Game</option>
-          {game.map((gameOption) => (
-            <option key={gameOption.gameId} value={gameOption.gameId.toString()}>
-              {gameOption.gameName}
-            </option>
-
-          ))}
-        </select>
-      </label>
+      <label>Game List:</label>
+        <Select className="label"
+          options={gamesMultiSelect} 
+          isMulti
+          onChange={(selectedOptions) => {
+            const selectedGameId = selectedOptions.map(option => parseInt(option.value));
+            setSelectedGameId(selectedGameId);
+          }}  />
       <br />
       <button type="submit">Submit</button>
       <br />
-      <strong>add multiple game selection to game list option</strong>
     </form>
   );
 };

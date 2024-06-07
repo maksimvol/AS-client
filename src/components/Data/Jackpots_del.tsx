@@ -5,13 +5,11 @@ export const jackpots: IJackpot[] = [{
     jackpotName: 'testJackpot1',
     jackpotType: ['testType'],
     percentageSetList: [1, 2, 3],
-    gameList: [1, 2]
 },
 {
     jackpotId: 2,
     jackpotName: 'testJackpot2',
     jackpotType: ['testType'],
     percentageSetList: [1, 2, 3],
-    gameList: [3, 4]
 }
 ];

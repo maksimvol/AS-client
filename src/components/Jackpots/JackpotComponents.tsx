@@ -1,22 +1,28 @@
-import React from "react";
-import { jackpots } from "../Data/Jackpots";
-import { games } from "../Data/Games";
+import React, { useEffect, useState } from "react";
 import DisplayJackpotInfo from "./DisplayJackpotComponents";
 import JackpotHeaders from "./JackpotHeaders";
+import { IJackpot } from "../../types/types";
+import { getJackpot } from "../../util_jackpot";
 
 const JackpotComponent: React.FC = () => {
+    const [jackpotList, setJackpotList] = useState<IJackpot[]>([])
     // Convert jackpots object to array
-    const jackpotValues = Object.values(jackpots);
+    const jackpotValues = Object.values(jackpotList);
 
-    // Link gameList IDs to actual game objects
-    jackpotValues.forEach((jackpot: any) => {
-        jackpot.gameList = games.find((game) => game.gameId === jackpot.gameList);
-    });
+    useEffect(() => {
+        getJackpot()
+        .then(data => {
+            setJackpotList(data)
+        })
+        .catch(error => {
+          console.log("Error fetching app: ", error);
+        })
+      },[])
 
     return (
         <table>
             <thead>
-                <JackpotHeaders jackpots={jackpots} />
+                <JackpotHeaders jackpots={jackpotList} />
             </thead>
             <tbody>
                 {jackpotValues.map((jackpot: any, index) => (

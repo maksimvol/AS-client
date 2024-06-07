@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Select from 'react-select'
 import { IGame, IMath } from "../types/types";
-import { games } from "../components/Data/Games";
-import { gameMath } from "../components/Data/Math";
 import { addGame, getGame } from "../util_game";
 import { getMath } from "../util_math";
 
@@ -14,10 +13,9 @@ const AddGame = () : JSX.Element => {
   const [freegames, setFreegames] = useState(false);
   const [gamble, setGamble] = useState(false);
   const [jackpot, setJackpot] = useState(false);
-  const [selectedMathId, setSelectedMathId] = useState<number | null>(null);
+  const [selectedMathId, setSelectedMathId] = useState(Number);
 
   const [game, setGame] = useState<IGame[]>([])
-  const [selectedGame, setSelectedGame] = useState({})
 
   const [math, setMath] = useState<IMath[]>([]); 
 
@@ -87,7 +85,7 @@ const AddGame = () : JSX.Element => {
           freegames: freegames,
           gamble: gamble,
           jackpot: jackpot,
-          mathId: selectedMathId || 0,
+          mathId: selectedMathId,
           gameVersion: ['1.0', '1']
         }
         await addGame(newGame);
@@ -108,99 +106,95 @@ const AddGame = () : JSX.Element => {
     }
   }
 
+  const mathSelect = math.map((mathOption) => (
+    {value:mathOption.mathId.toString(), label: mathOption.mathName}
+  ))
+
   return (
     <form onSubmit={handleSubmit} className='main'>
       <h1>Add Game</h1>
-      <label>Game Name:
-        <input className={isOk ? "default" : "error"}
+      <label>Game Name:</label>
+      <br />
+        <input className="label"
           type="text" 
           value={name}
           onChange={(e) => checkCompatibility(e)}
         />
-      </label>
       <br />
-      <label>
-        Game Id: 
-        <input
+      <label>Game Id: </label>
+      <br />
+        <input className="label"
           type="number"
-          value={games.length + 1}
+          value={game.length + 1}
           disabled
         />
-      </label>
       <br />
-      <label>
-        System Id: 
-        <input
+      <label>System Id:</label>
+      <br />
+        <input className="label"
           type="number"
           value={systemId}
           onChange={(e) => setSystemId(parseInt(e.target.value))}
         />
-      </label>
       <br />
-      <label>Max WLC Main:
-        <input 
+      <label>Max WLC Main:</label>
+      <br />
+        <input className="label"
           type="number"
           value={maxWLCMain}
           onChange={(e) => setMaxWLCMain(parseInt(e.target.value))}
         />
-      </label>
       <br />
-      <label>Max WLC FreeGames:
-        <input 
+      <label>Max WLC FreeGames:</label>
+      <br />
+        <input className="label"
           type="number"
           value={maxWLCFreegames}
           onChange={(e) => setMaxWLCFreegames(parseInt(e.target.value))}
         />
-      </label>
       <br />
-      <label>Freegames:
-        <input 
+      <label>Freegames:</label>
+      <br />
+        <input className="label"
           type="checkbox"
           checked={freegames}
           onChange={() => setFreegames(!freegames)}
         />
-      </label>
       <br />
-      <label>Gamble:
-        <input 
+      <label>Gamble:</label>
+      <br />
+        <input className="label"
           type="checkbox"
           checked={gamble}
           onChange={() => setGamble(!gamble)}
         />
-      </label>
       <br />
-      <label>Jackpot:
-        <input 
+      <label>Jackpot:</label>
+      <br />
+        <input className="label"
           type="checkbox"
           checked={jackpot}
           onChange={() => setJackpot(!jackpot)}
         />
-      </label>
       <br />
       <label>Math Id:
-        <select 
-          value={selectedMathId ? selectedMathId.toString() : ''} 
-          onChange={(e) => setSelectedMathId(parseInt(e.target.value))} 
-        >
-          <option value="">Select Math</option>
-          {math.map((mathOption) => (
-            <option key={mathOption.mathId} value={mathOption.mathId.toString()}>
-              {mathOption.mathName}
-            </option>
-          ))}
-        </select>
+        <Select className="label"
+          options={mathSelect} 
+          onChange={(selectedOptions) => {
+            setSelectedMathId(parseInt(selectedOptions?.value || "0"));
+          }}  
+          />
       </label>
       <br />
-      <label>Game Version:
-        <input 
+      <label>Game Version:</label>
+      <br />
+        <input className="label"
           type="string"
           value={['1.0', '1'].join(' | ')}
           disabled
         />
-      </label>
       <br />
       <button type="submit">Submit</button>
-      {/* <button type="submit" disabled={!selectedMathId}>Submit</button> */}
     </form>
   );
 };

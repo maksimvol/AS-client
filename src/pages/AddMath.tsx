@@ -9,7 +9,6 @@ const AddMath = (): JSX.Element => {
   const [percentageSetList, setPercentageSetList] = useState<number[]>([]);
 
   const [math, setMath] = useState<IMath[]>([])
-  const [selectedMath, setSelectedMath] = useState({})
 
   useEffect(() => {
     getMath()
@@ -84,28 +83,25 @@ const AddMath = (): JSX.Element => {
   return (
     <form onSubmit={handleSubmit} className="main">
       <h1>Add Math</h1>
-      <label>
-        Math Name:
-        <input className={isOk ? "default" : "error"}
+      <label>Math Name:</label>
+      <br />
+        <input className="label"
           type="text"
           value={name}
           onChange={(e) => checkCompatibility(e)}
         />
-      </label>
       <br />
-      <label>
-        Percentage <strong>(separate with space)</strong>:
-        <input type="text" 
+      <label>Percentage <strong>(separate with space)</strong>:</label>
+      <br />
+        <input className="label"
         value={percentage.join(' ')}
         onChange={(e) => handlePercentage(e)} />
-      </label>
       <br />
-      <label>
-        Percentage Set List <strong>(separate with space)</strong>:
-        <input type="text" 
+      <label>Percentage Set List <strong>(separate with space)</strong>:</label>
+      <br />
+        <input className="label"
         value={percentageSetList.join(' ')}
         onChange={(e) => handlePercentageSetList(e)} />
-      </label>
       <br />
       <button type="submit">Submit</button>
     </form>

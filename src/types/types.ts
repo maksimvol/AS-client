@@ -8,13 +8,10 @@ export interface IGame {
     gamble: boolean;
     jackpot: boolean;
     mathId: number;
-    gameVersion: [string, string];    
-    // [key: string]: any;
+    gameVersion: [string, string];
 }
 
 export interface IGameModed extends IGame{
-    // mathName: string;
-    // [n:string]: boolean
     [key: string]: any;
 }
 export interface IGameAndAppList extends IGame{
@@ -39,7 +36,6 @@ export interface IJackpot {
     jackpotName: string;
     jackpotType: string[];
     percentageSetList: number[];
-    gameList: number[];
 }
 
 export interface IApp {

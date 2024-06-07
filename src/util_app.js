@@ -1,4 +1,3 @@
-import { SERV, GAME_URL, JACKPOT_URL, APP_URL, MATH_URL } from "./constants"
 import axios from "axios"
 
 // API functions
