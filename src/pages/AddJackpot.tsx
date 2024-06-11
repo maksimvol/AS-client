@@ -17,8 +17,6 @@ const AddJackpot = () : JSX.Element => {
     .catch(error => {
       console.log("Error fetching jackpot: ", error);
     })
-
-
   },[])
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -46,8 +44,8 @@ const AddJackpot = () : JSX.Element => {
     const NameAlreadyExists = jackpot.find((e)=>e.jackpotName === name);
 
     const isEmptyName = !name;
-    const isEmptyJackpotType = !jackpotType;
-    const isEmptyPercentageSetList = !percentageSetList;
+    const isEmptyJackpotType = jackpotType.length === 0;
+    const isEmptyPercentageSetList = percentageSetList.length === 0;
 
     if(NameAlreadyExists){
         alert("Jackpot Name already exists! Please type different Jackpot Name!");

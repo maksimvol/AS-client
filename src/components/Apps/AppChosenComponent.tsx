@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IApp, IGame, IGameModed, IJackpot, IMath } from "../../types/types";
+import { IApp, IGameModed, IJackpot, IMath } from "../../types/types";
 import { CompoundTableHeaders } from "../Data/Headers";
 import GameHeaders from "../Games/GameHeaders";
 import DisplayGameInfo from "../Games/DisplayGameComponents";
@@ -59,9 +59,6 @@ const AppChosenComponent: React.FC = () => {
     
     if (!currentApp) return <></>;
 
-    // const gameListGames: IGame[] = games.filter(game => currentApp.gameList.map(e => e.gameId).includes(game.gameId));
-    // const jackpotList: IJackpot[] = jackpots.filter(jackpot => currentApp.jackpotId === jackpot.jackpotId);
-
     let headerValue = Object(CompoundTableHeaders);
 
     appList.forEach((appList)=>{
@@ -80,6 +77,10 @@ const AppChosenComponent: React.FC = () => {
         return {...game}
     })
 
+    const filteredJackpots = jackpotList.filter(jackpot => 
+        jackpot.jackpotId === currentApp.jackpotId
+    );
+
     return(
         <div className="main">
             <h2>App Name: {currentApp.appName}</h2>
@@ -90,6 +91,17 @@ const AppChosenComponent: React.FC = () => {
                 </thead>
                 <tbody>
                     <DisplayAppInfo app={currentApp} />
+                </tbody>
+            </table>
+            <h2>Jackpot Info</h2>
+            <table>
+                <thead>
+                    <JackpotHeaders key={'JackpotHeaders'} jackpots={headerValue}/>
+                </thead>
+                <tbody>
+                    {filteredJackpots.map((jackpot, index) => (
+                        <DisplayJackpotInfo key={"jackpot" + index} jackpot={jackpot} />
+                    ))}
                 </tbody>
             </table>
             <h2>Games Info</h2>
@@ -103,17 +115,6 @@ const AppChosenComponent: React.FC = () => {
                         <DisplayGameInfo key={"game" + index} game={game} />
                       ))
                     }
-                </tbody>
-            </table>
-            <h2>Jackpot Info</h2>
-            <table>
-                <thead>
-                    <JackpotHeaders key={'JackpotHeaders'} jackpots={headerValue}/>
-                </thead>
-                <tbody>
-                    {jackpotList.map((jackpot, index) => (
-                        <DisplayJackpotInfo key={"jackpot" + index} jackpot={jackpot} />
-                    ))}
                 </tbody>
             </table>
         </div>
