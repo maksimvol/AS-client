@@ -91,6 +91,14 @@ const AddMath = (): JSX.Element => {
           onChange={(e) => checkCompatibility(e)}
         />
       <br />
+      <label>Math Id: </label>
+      <br />
+        <input className="label"
+          type="number"
+          value={math.length + 1}
+          disabled
+        />
+      <br />
       <label>Percentage <strong>(separate with space)</strong>:</label>
       <br />
         <input className="label"
