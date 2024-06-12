@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { IApp, IGameModed, IJackpot, IMath } from "../../types/types";
 import { CompoundTableHeaders } from "../Data/Headers";
 import GameHeaders from "../Games/GameHeaders";
@@ -93,6 +93,9 @@ const AppChosenComponent: React.FC = () => {
                     <DisplayAppInfo app={currentApp} />
                 </tbody>
             </table>
+            <Link to={`/gameSetUpdate/${currentAppId}`}>
+                <button type="button" className="button">Update {currentApp.appName} App</button>
+            </Link>
             <h2>Jackpot Info</h2>
             <table>
                 <thead>

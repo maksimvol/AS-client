@@ -29,8 +29,19 @@ export const getApp = () => {
 }
 
 // Getting Record by Id
-export const getAppById = () => {
-    return axios.get(`http://localhost:3001/apps/2`)
+export const getAppById = (appId) => {
+    return axios.get('http://localhost:3001/apps/'+appId)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
+
+// Updating Record by Id
+export const updateAppById = () => {
+    return axios.update(`http://localhost:3001/apps/2`)
     .then(response => {
         return response.data;
     })

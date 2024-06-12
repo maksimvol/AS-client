@@ -103,7 +103,8 @@ const AddMath = (): JSX.Element => {
         value={percentageSetList.join(' ')}
         onChange={(e) => handlePercentageSetList(e)} />
       <br />
-      <button type="submit">Submit</button>
+      <br />
+      <button type="submit" className="button">Submit</button>
     </form>
   );
 };

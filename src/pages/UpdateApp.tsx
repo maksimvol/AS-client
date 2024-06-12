@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Select from 'react-select'
 import { IApp, IGame, IJackpot } from "../types/types";
-import { addApp, getApp } from "../util_app";
+import { addApp, getApp, getAppById, updateAppById } from "../util_app";
 import { getGame } from "../util_game";
 import { getJackpot } from "../util_jackpot";
+import { useParams } from "react-router-dom";
 
-const AddApp = () : JSX.Element => {   
+const UpdateApp = () : JSX.Element => {   
   const [name, setName] = useState("");
+  const [gameSetId, setGameSetId] = useState(Number);
   const [isOk, setOkState] = useState(false);
   const [selectedJackpotId, setSelectedJackpotId] = useState(Number);
   const [region, setRegion] = useState<string>("");
@@ -18,10 +20,18 @@ const AddApp = () : JSX.Element => {
   const [game, setGame] = useState<IGame[]>([])
   const [jackpot, setJackpot] = useState<IJackpot[]>([])
 
+  let {setId} = useParams()
+ 
   useEffect(() => {
-    getApp()
+    getAppById(setId)
     .then(data => {
-      setApp(data)      
+      setName(data.appName)
+      setGameSetId(data.gameSetId)
+      setSelectedJackpotId(data.jackpotId);
+      setRegion(data.region);
+      setInterface(data.interface);
+      // setSelectedGameId(data.gameList.map(game => game.gameId));
+      // setSelectedGameVersion(data.gameList.map(game => game.gameVersion));
     })
     .catch(error => {
       console.log("Error fetching app: ", error);
@@ -89,7 +99,7 @@ const AddApp = () : JSX.Element => {
       try{
         const newApp: IApp = {
           appName: name,
-          gameSetId: 0, 
+          gameSetId: gameSetId, 
           jackpotId: selectedJackpotId,
           jackpotVersion: ['1.0', '1'],
           region: region,
@@ -129,7 +139,7 @@ const AddApp = () : JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className='main'>
-      <h1>Add App</h1>
+      <h1>Update App</h1>
       <label>App Name:</label>
       <br />
         <input className="label"
@@ -142,7 +152,7 @@ const AddApp = () : JSX.Element => {
       <br />
         <input className="label"
           type="number"
-          value={game.length + 1}
+          value={gameSetId}
           disabled
         />
       <br />
@@ -183,10 +193,10 @@ const AddApp = () : JSX.Element => {
             setSelectedGameId(selectedGameId);
           }}  />
       <br />
-      <button type="submit" className="button">Submit</button>
+      <button type="submit">Update</button>
       <br />
     </form>
   );
 };
 
-export default AddApp;
+export default UpdateApp;

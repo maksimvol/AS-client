@@ -37,7 +37,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    cursor: default;
+    cursor: text;
     /* display: flex; */
     -webkit-box-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
@@ -57,4 +57,34 @@
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
+}
+.label:disabled{
+  cursor: not-allowed;
+}
+
+.button{
+  background-color: #FFFFFF;
+  border: 1px solid #222222;
+  border-radius: 8px;
+  cursor: pointer;
+  display: center;
+  font-family: "Helvetica Neue",sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 13px 23px;
+  position: relative;
+  text-align: center;
+  transition: all 100ms;
+}
+
+.button:active {
+  background-color: #F7F7F7;
+  border-color: #000000;
+  transform: scale(.96);
+}
+
+.button:hover {
+  box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+  transition: all 100ms;
 }

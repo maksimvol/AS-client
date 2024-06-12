@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
 import GameSet from './pages/GameSet';
 import AddApp from './pages/AddApp';
+import UpdateApp from './pages/UpdateApp';
 import AddJackpot from './pages/AddJackpot';
 import AddMath from './pages/AddMath';
 import Footer from './components/Footer';
@@ -26,8 +27,9 @@ export default function App() {
             <Route path="addJackpot" element={<AddJackpot />} />
             <Route path="addMath" element={<AddMath />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<NoPage />} />
             <Route path="gameSet/:setId" element={<GameSet/>} />
+            <Route path="gameSetUpdate/:setId" element={<UpdateApp/>} />
+            <Route path="*" element={<NoPage/>} />
           </Route>
         </Routes>
         <Footer />

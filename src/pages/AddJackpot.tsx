@@ -113,7 +113,8 @@ const AddJackpot = () : JSX.Element => {
           onChange={(e) => handlePercentageSetList(e)}
         />
       <br />
-      <button type="submit">Submit</button>
+      <br />
+      <button type="submit" className="button">Submit</button>
       <br />
     </form>
   );

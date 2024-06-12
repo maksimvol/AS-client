@@ -37,3 +37,25 @@ export const getGameById = () => {
         console.log(error);
     })
 }
+
+// Deleting Record by Id
+export const DeleteGameById = () => {
+    return axios.delete(`http://localhost:3001/games/2`)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
+
+// Deleting All Records
+export const DeleteAllGames = () => {
+    return axios.delete(`http://localhost:3001/games`)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
