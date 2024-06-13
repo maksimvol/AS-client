@@ -4,7 +4,7 @@ import { IApp, IGame, IJackpot } from "../types/types";
 import { addApp, getApp, getAppById, updateAppById } from "../util_app";
 import { getGame } from "../util_game";
 import { getJackpot } from "../util_jackpot";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateApp = () : JSX.Element => {   
   const [name, setName] = useState("");
@@ -19,6 +19,8 @@ const UpdateApp = () : JSX.Element => {
   const [app, setApp] = useState<IApp[]>([])
   const [game, setGame] = useState<IGame[]>([])
   const [jackpot, setJackpot] = useState<IJackpot[]>([])
+
+  const navigate = useNavigate()
 
   let {setId} = useParams()
  
@@ -73,6 +75,14 @@ const UpdateApp = () : JSX.Element => {
     setInterface(e.target.value);
   }
 
+  async function goBack() {
+    try{
+      navigate('/')
+  } catch(error) {
+      console.log("Error deleting app: ", error);
+  }
+  }
+
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
     const NameAlreadyExists = app.find((e)=>e.appName === name);
@@ -108,6 +118,9 @@ const UpdateApp = () : JSX.Element => {
             gameVersion: selectedGameVersion 
           }))
         }
+
+        await updateAppById(setId, updatedApp); 
+
         console.log("App updated successfully");
         console.log(updatedApp)
         setApp([updatedApp]);
@@ -117,6 +130,7 @@ const UpdateApp = () : JSX.Element => {
         setRegion("");
         setInterface("");
         setSelectedGameId([]);
+        navigate('/');
       } catch (error) {
         console.error("Error updating app:", error);
       }
@@ -164,8 +178,8 @@ const UpdateApp = () : JSX.Element => {
             setSelectedJackpotId(0);
           }
         }}
-/>
-<br />
+      />
+      <br />
       <label>Region:</label>
       <br />
         <input className="label"
@@ -194,6 +208,7 @@ const UpdateApp = () : JSX.Element => {
         />
       <br />
       <button type="submit" className="button">Update</button>
+      <button type="button" className="button" onClick={goBack}>Go Back</button>
       <br />
     </form>
   );

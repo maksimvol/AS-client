@@ -27,9 +27,9 @@ export const getMath = () => {
     })
 }
 
-// Getting Record by Id
-export const getMathById = () => {
-    return axios.get(`http://localhost:3001/maths/2`)
+// Deleting Record by Id
+export const deleteMathById = (mathId) => {
+    return axios.delete(`http://localhost:3001/maths/${mathId}`)
     .then(response => {
         return response.data;
     })
@@ -37,3 +37,25 @@ export const getMathById = () => {
         console.log(error);
     })
 }
+
+// Getting Record by Id
+export const getMathById = (mathId) => {
+    return axios.get(`http://localhost:3001/maths/${mathId}`)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
+
+// Updating Record by Id
+export const updateMathById = (mathId, updatedMath) => {
+    return axios.patch(`http://localhost:3001/maths/${mathId}`, updatedMath)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+};

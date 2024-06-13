@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Select from 'react-select'
 import { IGame, IMath } from "../types/types";
-import { getGameById } from "../util_game";
+import { getGameById, updateGameById } from "../util_game";
 import { getMath } from "../util_math";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateGame = () : JSX.Element => {   
   const [name, setName] = useState("");
@@ -19,12 +19,14 @@ const UpdateGame = () : JSX.Element => {
   const [game, setGame] = useState<IGame[]>([])
   const [math, setMath] = useState<IMath[]>([]); 
 
+  const navigate = useNavigate()
+
   let {gameId} = useParams()
 
   useEffect(() => {
     getGameById(gameId)
     .then(data => {
-      setGame(data)
+      setGame([data])
       setName(data.gameName)
       setSystemId(data.systemId)
       setMaxWLCMain(data.maxWLCMain)
@@ -32,7 +34,7 @@ const UpdateGame = () : JSX.Element => {
       setFreegames(data.freegames)
       setGamble(data.gamble)
       setJackpot(data.jackpot)
-      setSelectedMathId(data.selectedMathId)
+      setSelectedMathId(data.mathId)
     })
     .catch(error => {
       console.log("Error fetching game: ", error);
@@ -60,7 +62,7 @@ const UpdateGame = () : JSX.Element => {
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
     const NameAlreadyExists = game.find((e)=>e.gameName === name);
-    const IdAlreadyExists = game.find((e)=>e.systemId === systemId);
+    // const IdAlreadyExists = game.find((e)=>e.systemId === systemId);
 
     const isEmptyName = !name;
     const isEmptySystemId = !systemId;
@@ -70,8 +72,8 @@ const UpdateGame = () : JSX.Element => {
 
     if(NameAlreadyExists){
         alert("Game Name already exists! Please type different Game Name!");
-    } else if(IdAlreadyExists){
-        alert("System Id already exists! Please type different System Id!");
+    // } else if(IdAlreadyExists){
+    //     alert("System Id already exists! Please type different System Id!");
     } else if(isEmptyName || isEmptySystemId || isEmptyMaxWLCMain || isEmptyMaxWLCFreegames || isEmptySelectedMathId){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
@@ -98,6 +100,9 @@ const UpdateGame = () : JSX.Element => {
           mathId: selectedMathId,
           gameVersion: ['1.0', '1']
         }
+
+        await updateGameById(gameId, updatedGame); 
+
         console.log("Game updated successfully");
         setGame([updatedGame]);
         setName("");
@@ -109,6 +114,7 @@ const UpdateGame = () : JSX.Element => {
         setGamble(false);
         setJackpot(false);
         setSelectedMathId(0);
+        navigate('/')
       } catch (error) {
         console.error("Error updating game:", error);
       }
@@ -118,6 +124,14 @@ const UpdateGame = () : JSX.Element => {
   const mathSelect = math.map((mathOption) => (
     {value:mathOption.mathId.toString(), label: mathOption.mathName}
   ))
+
+  async function goBack() {
+    try{
+      navigate('/')
+  } catch(error) {
+      console.log("Can not go back: ", error);
+  }
+  }
 
   return (
     <form onSubmit={handleSubmit} className='main'>
@@ -138,14 +152,14 @@ const UpdateGame = () : JSX.Element => {
           disabled
         />
       <br /> */}
-      <label>System Id:</label>
+      {/* <label>System Id:</label>
       <br />
         <input className="label"
           type="number"
           value={systemId}
           onChange={(e) => setSystemId(parseInt(e.target.value))}
         />
-      <br />
+      <br /> */}
       <label>Max WLC Main:</label>
       <br />
         <input className="label"
@@ -187,12 +201,17 @@ const UpdateGame = () : JSX.Element => {
         />
       <br />
       <label>Math Id:
-        <Select className="label"
-          options={mathSelect} 
-          onChange={(selectedOptions) => {
-            setSelectedMathId(parseInt(selectedOptions?.value || "0"));
-          }}  
-          />
+      <Select className="label"
+        options={mathSelect}
+        value={mathSelect.find(mathOption => mathOption.value === selectedMathId?.toString())}
+        onChange={(selectedOptions) => {
+          if( selectedOptions) {
+            setSelectedMathId(parseInt(selectedOptions.value));
+          } else {
+            setSelectedMathId(0);
+          }
+        }}
+      />
       </label>
       <br />
       <label>Game Version:</label>
@@ -205,6 +224,7 @@ const UpdateGame = () : JSX.Element => {
       <br />
       <br />
       <button type="submit" className="button">Submit</button>
+      <button type="button" className="button" onClick={goBack}>Go Back</button>
       <br />
     </form>
   );

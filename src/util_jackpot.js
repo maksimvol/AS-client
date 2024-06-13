@@ -27,9 +27,9 @@ export const getJackpot = () => {
     })
 }
 
-// Getting Record by Id
-export const getJackpotById = () => {
-    return axios.get(`http://localhost:3001/jackpots/2`)
+// Deleting Record by Id
+export const deleteJackpotById = (jackpotId) => {
+    return axios.delete(`http://localhost:3001/jackpots/${jackpotId}`)
     .then(response => {
         return response.data;
     })
@@ -37,3 +37,26 @@ export const getJackpotById = () => {
         console.log(error);
     })
 }
+
+
+// Getting Record by Id
+export const getJackpotById = (jackpotId) => {
+    return axios.get(`http://localhost:3001/jackpots/${jackpotId}`)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
+
+// Updating Record by Id
+export const updateJackpotById = (jackpotId, updatedJackpot) => {
+    return axios.patch(`http://localhost:3001/jackpots/${jackpotId}`, updatedJackpot)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+};

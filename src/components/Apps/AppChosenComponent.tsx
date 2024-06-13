@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { IApp, IGameModed, IJackpot, IMath } from "../../types/types";
 import { CompoundTableHeaders } from "../Data/Headers";
 import GameHeaders from "../Games/GameHeaders";
@@ -8,7 +8,7 @@ import DisplayJackpotInfo from "../Jackpots/DisplayJackpotComponents";
 import JackpotHeaders from "../Jackpots/JackpotHeaders";
 import DisplayAppInfo from "./DisplayAppComponents";
 import AppHeaders from "./AppHeaders";
-import { getApp } from "../../util_app";
+import { deleteAppById, getApp } from "../../util_app";
 import { getGame } from "../../util_game";
 import { getJackpot } from "../../util_jackpot";
 import { getMath } from "../../util_math";
@@ -18,6 +18,8 @@ const AppChosenComponent: React.FC = () => {
     const [jackpotList, setJackpotList] = useState<IJackpot[]>([])
     const [appList, setAppList] = useState<IApp[]>([])
     const [math, setMath] = useState<IMath[]>([])
+
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         getApp()
@@ -41,7 +43,7 @@ const AppChosenComponent: React.FC = () => {
             setJackpotList(data)
         })
         .catch(error => {
-          console.log("Error fetching app: ", error);
+          console.log("Error fetching jackpot: ", error);
         })
 
         getMath()
@@ -49,13 +51,23 @@ const AppChosenComponent: React.FC = () => {
             setMath(data)
         })
         .catch(error => {
-          console.log("Error fetching app: ", error);
+          console.log("Error fetching math: ", error);
         })
       },[])
 
     let {setId} = useParams()
     let currentAppId = Number(setId)
     const currentApp: IApp | undefined | null = appList.find((appV: IApp) => appV.gameSetId === currentAppId)
+
+    async function handleDelete() {
+        try{
+            await deleteAppById(currentAppId);
+            navigate('/')
+            navigate(0)
+        } catch(error) {
+            console.log("Error deleting app: ", error);
+        }
+    }
     
     if (!currentApp) return <></>;
 
@@ -97,7 +109,7 @@ const AppChosenComponent: React.FC = () => {
             <Link className="button" to={`/chosenAppUpdate/${currentAppId}`}>
                 Update {currentApp.appName} App
             </Link>
-            <button type="button" className="buttonDelete">Delete {currentApp.appName} App</button>
+            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentApp.appName} App</button>
             <h2>Jackpot Info</h2>
             <table>
                 <thead>

@@ -1,93 +1,67 @@
 import React, { useEffect, useState } from "react";
-// import { useParams, Link } from "react-router-dom";
-// import { IApp, IGame, IGameModed, IJackpot, IMath } from "../../types/types";
-// import { CompoundTableHeaders } from "../Data/Headers";
-// import GameHeaders from "../Games/GameHeaders";
-// import DisplayGameInfo from "../Games/DisplayGameComponents";
-// import { getApp } from "../../util_app";
-// import { getGame } from "../../util_game";
-// import { getJackpot } from "../../util_jackpot";
-// import { getMath } from "../../util_math";
-// import ChosenGameHeaders from "./ChosenGameHeaders";
-// import MathHeaders from "../Maths/MathHeaders";
-// import DisplayMathInfo from "../Maths/DisplayMathComponents";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { IMath } from "../../types/types";
+import { CompoundTableHeaders } from "../Data/Headers";
+import { deleteMathById, getMath } from "../../util_math";
+import MathHeaders from "../Maths/MathHeaders";
+import DisplayMathInfo from "./DisplayMathComponents";
 
-// const GameChosenComponent: React.FC = () => {
-//     const [gameList, setGameList] = useState<IGameModed[]>([])
-//     const [jackpotList, setJackpotList] = useState<IJackpot[]>([])
-//     const [appList, setAppList] = useState<IApp[]>([])
-//     const [math, setMath] = useState<IMath[]>([])
+const MathChosenComponent: React.FC = () => {
+    const [mathList, setMathList] = useState<IMath[]>([])
 
-//     useEffect(() => {
-//         getGame()
-//         .then(data => {
-//           setGameList(data)
-//         })
-//         .catch(error => {
-//           console.log("Error fetching game: ", error);
-//         })
+    const navigate = useNavigate(); 
 
-//         getMath()
-//         .then(data => {
-//             setMath(data)
-//         })
-//         .catch(error => {
-//           console.log("Error fetching app: ", error);
-//         })
-//       },[])
+    useEffect(() => {
+        getMath()
+        .then(data => {
+            setMathList(data)
+        })
+        .catch(error => {
+          console.log("Error fetching app: ", error);
+        })
+      },[])
 
-//     let {gameId} = useParams()
-//     let currentGameId = Number(gameId)
-//     const currentGame: IGameModed | undefined | null = gameList.find((gameV: IGameModed) => gameV.gameId === currentGameId)
+    let {mathId} = useParams()
+    let currentMathId = Number(mathId)
+    const currentMath: IMath | undefined | null = mathList.find((mathV: IMath) => mathV.mathId === currentMathId)
+
+    async function handleDelete() {
+        try{
+            await deleteMathById(currentMathId);
+            navigate('/')
+            navigate(0)
+        } catch(error) {
+            console.log("Error deleting app: ", error);
+        }
+    }
     
-//     if (!currentGame) return <></>;
+    if (!currentMath) return <></>;
 
-//     let headerValue = Object(CompoundTableHeaders);
+    let headerValue = Object(CompoundTableHeaders);
 
-//     gameList.forEach((gameList)=>{
-//         let v  = gameList.gameName;
-//         let n = 'game'+gameList.gameId;
-//         headerValue[n] = [v, gameList.gameId];
-//     })
-//     math.forEach((math)=>{
-//         let v  = math.mathName;
-//         let n = 'app'+math.mathId;
-//         headerValue[n] = [v, math.mathId];
-//     })
+    mathList.forEach((mathList)=>{
+        let v  = mathList.mathName;
+        let n = 'math'+mathList.mathId;
+        headerValue[n] = [v, mathList.mathId];
+    })
 
-//     const filteredMath = math.filter(math => 
-//         math.mathId === currentGame.mathId
-//     );
-
-//     return(
-//         <div className="main">
-//             <h2>Game Name: {currentGame.gameName}</h2>
-//             <h2>Game Info</h2>
-//             <table>
-//                 <thead>
-//                     <ChosenGameHeaders key={'ChosenGameHeaders'} game={gameList}/>
-//                 </thead>
-//                 <tbody>
-//                     <DisplayGameInfo game={currentGame} />
-//                 </tbody>
-//             </table>
-//             <br />
-//             <Link className="button" to={`/chosenGameUpdate/${currentGameId}`}>
-//                 Update {currentGame.gameName} Game
-//             </Link>
-//             <button type="button" className="buttonDelete">Delete {currentGame.gameName} Game</button>
-//             <h2>Math Info</h2>
-//             <table>
-//                 <thead>
-//                     <MathHeaders key={'MathHeaders'} math={headerValue}/>
-//                 </thead>
-//                 <tbody>
-//                     {filteredMath.map((math, index) => (
-//                         <DisplayMathInfo key={"math" + index} math={math} />
-//                     ))}
-//                 </tbody>
-//             </table>
-//         </div>
-//     );
-// };
-// export default GameChosenComponent;
+    return(
+        <div className="main">
+            <h2>Math Info</h2>
+            <table>
+                <thead>
+                    <MathHeaders key={'MathHeaders'} math={headerValue}/>
+                </thead>
+                <tbody>
+                    <DisplayMathInfo math={currentMath} />
+                </tbody>
+            </table>
+            <br />
+            <Link className="button" to={`/chosenMathUpdate/${currentMathId}`}>
+                Update {currentMath.mathName} Game
+            </Link>
+            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentMath.mathName} Game</button>
+        </div>
+    );
+};
+export default MathChosenComponent;

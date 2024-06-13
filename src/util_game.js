@@ -39,8 +39,8 @@ export const getGameById = (gameId) => {
 }
 
 // Deleting Record by Id
-export const DeleteGameById = () => {
-    return axios.delete(`http://localhost:3001/games/2`)
+export const deleteGameById = (gameId) => {
+    return axios.delete(`http://localhost:3001/games/${gameId}`)
     .then(response => {
         return response.data;
     })
@@ -59,3 +59,14 @@ export const DeleteAllGames = () => {
         console.log(error);
     })
 }
+
+// Updating Record by Id
+export const updateGameById = (gameId, updatedGame) => {
+    return axios.patch(`http://localhost:3001/games/${gameId}`, updatedGame)
+    .then(response => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+};

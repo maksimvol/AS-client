@@ -1,7 +1,7 @@
 
 import GameChosenComponent from '../components/Games/GameChosenComponent';
 
-const ChosenApp = () => {
+const ChosenGame = () => {
     
     return (
       <div>
@@ -13,4 +13,4 @@ const ChosenApp = () => {
     );
   };
   
-  export default ChosenApp;
+  export default ChosenGame;

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { IMath } from "../types/types";
-import { addMath, getMath } from "../util_math";
+import { addMath, getMath, getMathById, updateMathById } from "../util_math";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddMath = (): JSX.Element => {   
+const UpdateMath = (): JSX.Element => {   
   const [name, setName] = useState("");
   const [isOk, setOkState] = useState(false);
   const [percentage, setPercentage] = useState<number[]>([]);
@@ -10,15 +11,22 @@ const AddMath = (): JSX.Element => {
 
   const [math, setMath] = useState<IMath[]>([])
 
+  const navigate = useNavigate()
+
+  let {mathId} = useParams()
+
   useEffect(() => {
-    getMath()
+    getMathById(mathId)
     .then(data => {
-      setMath(data)      
+      setMath([data])     
+      setName(data.mathName)
+      setPercentage(data.percentage)
+      setPercentageSetList(data.percentageSetList) 
     })
     .catch(error => {
       console.log("Error fetching math: ", error);
     })
-  },[])
+  },[mathId])
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
@@ -68,18 +76,30 @@ const AddMath = (): JSX.Element => {
             percentage: percentage,
             percentageSetList: percentageSetList
           };
-          await addMath(newMath);
+
+          await updateMathById(mathId, newMath);
+
           console.log("Math added successfully");
-          setMath([...math, newMath]);
+          setMath([newMath]);
           setName("");
           setOkState(false);
           setPercentage([]);
           setPercentageSetList([]);
+          navigate('/')
         } catch (error) {
           console.error("Error adding math:", error);
         }
       }
     }
+
+    async function goBack() {
+      try{
+        navigate('/')
+    } catch(error) {
+        console.log("Can not go back: ", error);
+    }
+    }
+
   return (
     <form onSubmit={handleSubmit} className="main">
       <h1>Add Math</h1>
@@ -91,14 +111,14 @@ const AddMath = (): JSX.Element => {
           onChange={(e) => checkCompatibility(e)}
         />
       <br />
-      <label>Math Id: </label>
+      {/* <label>Math Id: </label>
       <br />
         <input className="label"
           type="number"
           value={math.length + 1}
           disabled
         />
-      <br />
+      <br /> */}
       <label>Percentage <strong>(separate with space)</strong>:</label>
       <br />
         <input className="label"
@@ -113,8 +133,9 @@ const AddMath = (): JSX.Element => {
       <br />
       <br />
       <button type="submit" className="button">Submit</button>
+      <button type="button" className="button" onClick={goBack}>Go Back</button>
     </form>
   );
 };
 
-export default AddMath;
+export default UpdateMath;

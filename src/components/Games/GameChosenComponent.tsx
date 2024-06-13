@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { IGameModed, IMath } from "../../types/types";
 import { CompoundTableHeaders } from "../Data/Headers";
 import DisplayGameInfo from "../Games/DisplayGameComponents";
-import { getGame } from "../../util_game";
+import { deleteGameById, getGame } from "../../util_game";
 import { getMath } from "../../util_math";
 import ChosenGameHeaders from "./ChosenGameHeaders";
 import MathHeaders from "../Maths/MathHeaders";
@@ -12,6 +12,8 @@ import DisplayMathInfo from "../Maths/DisplayMathComponents";
 const GameChosenComponent: React.FC = () => {
     const [gameList, setGameList] = useState<IGameModed[]>([])
     const [math, setMath] = useState<IMath[]>([])
+
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         getGame()
@@ -34,6 +36,16 @@ const GameChosenComponent: React.FC = () => {
     let {gameId} = useParams()
     let currentGameId = Number(gameId)
     const currentGame: IGameModed | undefined | null = gameList.find((gameV: IGameModed) => gameV.gameId === currentGameId)
+
+    async function handleDelete() {
+        try{
+            await deleteGameById(currentGameId);
+            navigate('/')
+            navigate(0)
+        } catch(error) {
+            console.log("Error deleting app: ", error);
+        }
+    }
     
     if (!currentGame) return <></>;
 
@@ -70,7 +82,7 @@ const GameChosenComponent: React.FC = () => {
             <Link className="button" to={`/chosenGameUpdate/${currentGameId}`}>
                 Update {currentGame.gameName} Game
             </Link>
-            <button type="button" className="buttonDelete">Delete {currentGame.gameName} Game</button>
+            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentGame.gameName} Game</button>
             <h2>Math Info</h2>
             <table>
                 <thead>

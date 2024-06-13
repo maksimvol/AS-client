@@ -30,7 +30,7 @@ export const getApp = () => {
 
 // Getting Record by Id
 export const getAppById = (appId) => {
-    return axios.get('http://localhost:3001/apps/'+appId)
+    return axios.get(`http://localhost:3001/apps/${appId}`)
     .then(response => {
         return response.data;
     })
@@ -41,7 +41,7 @@ export const getAppById = (appId) => {
 
 // Deleting Record by Id
 export const deleteAppById = (appId) => {
-    return axios.delete('http://localhost:3001/apps/'+appId)
+    return axios.delete(`http://localhost:3001/apps/${appId}`)
     .then(response => {
         return response.data;
     })
@@ -54,11 +54,9 @@ export const deleteAppById = (appId) => {
 export const updateAppById = (appId, updatedApp) => {
     return axios.patch(`http://localhost:3001/apps/${appId}`, updatedApp)
     .then(response => {
-        console.log('http://localhost:3001/apps/'+appId)
         return response.data;
     })
     .catch((error) => {
-        console.log('http://localhost:3001/apps/'+appId)
         console.log(error);
     })
 };

@@ -2,18 +2,26 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
-import AddGame from './pages/AddGame';
 import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
-import ChosenApp from './pages/ChosenApp';
-import ChosenGame from './pages/ChosenGame';
+
 import AddApp from './pages/AddApp';
-import UpdateApp from './pages/UpdateApp';
+import AddGame from './pages/AddGame';
 import AddJackpot from './pages/AddJackpot';
 import AddMath from './pages/AddMath';
+
+import UpdateApp from './pages/UpdateApp';
+import UpdateGame from './pages/UpdateGame';
+import UpdateMath from './pages/UpdateMath';
+import UpdateJackpot from './pages/UpdateJackpot';
+
+import ChosenApp from './pages/ChosenApp';
+import ChosenGame from './pages/ChosenGame';
+import ChosenMath from './pages/ChosenMath';
+import ChosenJackpot from './pages/ChosenJackpot';
+
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import UpdateGame from './pages/UpdateGame';
 
 
 export default function App() {
@@ -33,6 +41,10 @@ export default function App() {
             <Route path="chosenAppUpdate/:setId" element={<UpdateApp/>} />
             <Route path="chosenGame/:gameId" element={<ChosenGame/>} />
             <Route path="chosenGameUpdate/:gameId" element={<UpdateGame/>} />
+            <Route path="chosenMath/:mathId" element={<ChosenMath/>} />
+            <Route path="chosenMathUpdate/:mathId" element={<UpdateMath/>} />
+            <Route path="chosenJackpot/:jackpotId" element={<ChosenJackpot/>} />
+            <Route path="chosenJackpotUpdate/:jackpotId" element={<UpdateJackpot/>} />
             <Route path="*" element={<NoPage/>} />
           </Route>
         </Routes>
