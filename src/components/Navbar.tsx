@@ -29,7 +29,7 @@ const Navbar = () => {
                         <img src={Triangle} alt='logo' className='triangle'/>
                     </div>
                         <NavLink className={`itemText ${category_path === '/' ? "active-link" : ""}`} 
-                            to="/">Game Mix
+                            to="/">Records
                         </NavLink>
                 </div>
                 <div className='item'>

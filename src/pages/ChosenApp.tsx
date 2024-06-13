@@ -1,11 +1,11 @@
 
 import AppChosenComponent from '../components/Apps/AppChosenComponent';
 
-const GameSet = () => {
+const ChosenApp = () => {
     
     return (
       <div>
-            <h1>Chosen Game Set Info</h1>
+            <h1>Chosen App Info</h1>
             <div style={{ display: 'inline-block' }}>
                 <AppChosenComponent />
             </div>
@@ -13,4 +13,4 @@ const GameSet = () => {
     );
   };
   
-  export default GameSet;
+  export default ChosenApp;

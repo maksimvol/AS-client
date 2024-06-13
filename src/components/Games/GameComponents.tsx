@@ -41,17 +41,6 @@ const GameComponent: React.FC = () => {
       },[])
 
     let headerValue = Object(CompoundTableHeaders);
-    // let gamesValues = Object(games);
-    
-    // gamesValues.forEach((game:any)=>{ 
-    //     game['mathName']  = gameMath.find((e)=>e.mathId === game.mathId)?.mathName ?? 'No Math Attached';
-        
-    //     app.forEach((app)=>{
-    //         let n = 'app' + app.gameSetId;
-    //         game[n] =  app.gameList.find((e)=>e.gameId === game.gameId) ? true : false;
-    //     });
-    // });
-
 
     appList.forEach((appList)=>{
         let v  = appList.appName;

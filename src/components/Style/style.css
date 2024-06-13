@@ -62,9 +62,18 @@
   cursor: not-allowed;
 }
 
+.buttonDelete{
+  background-color: #ff6a6a;
+  border: 1px solid #222222;
+}
+
 .button{
   background-color: #FFFFFF;
   border: 1px solid #222222;
+}
+
+.button, .buttonDelete{
+  margin-right: 50px;
   border-radius: 8px;
   cursor: pointer;
   display: center;
@@ -76,15 +85,15 @@
   position: relative;
   text-align: center;
   transition: all 100ms;
+  text-decoration: none;
 }
 
-.button:active {
-  background-color: #F7F7F7;
+.button:active, .buttonDelete:active {
   border-color: #000000;
   transform: scale(.96);
 }
 
-.button:hover {
+.button:hover, .buttonDelete:hover {
   box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
   transition: all 100ms;
 }

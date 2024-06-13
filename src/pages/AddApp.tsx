@@ -71,7 +71,6 @@ const AddApp = () : JSX.Element => {
     const isEmptyRegion = region.length === 0;
     const isEmptyInterface = !interfaceName;
     const isEmptyGameList = selectedGameId.length === 0;
-    const isEmptyJackpot = !selectedJackpotId
 
     if(NameAlreadyExists){
         alert("App Name already exists! Please type different App Name!");
@@ -117,9 +116,6 @@ const AddApp = () : JSX.Element => {
   const gamesMultiSelect = game.map((gameOption) => (
     {value: gameOption.gameId.toString(), label: gameOption.gameName}
   ))
-  // const jackpotSelect = jackpot.map((jackpotOption) => (
-  //   {value:jackpotOption.jackpotId.toString(), label: jackpotOption.jackpotName}
-  // ))
 
   const jackpotSelect = [
     {value: "0", label: "No Jackpot"}, 
@@ -181,7 +177,8 @@ const AddApp = () : JSX.Element => {
           onChange={(selectedOptions) => {
             const selectedGameId = selectedOptions.map(option => parseInt(option.value));
             setSelectedGameId(selectedGameId);
-          }}  />
+          }}  
+        />
       <br />
       <button type="submit" className="button">Submit</button>
       <br />

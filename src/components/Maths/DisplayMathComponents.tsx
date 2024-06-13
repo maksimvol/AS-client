@@ -1,15 +1,20 @@
 import React from "react";
 import { IMath } from "../../types/types";
+import { Link } from "react-router-dom";
 
 const DisplayMathInfo: React.FC<{math: IMath}> = ({ math }) => {
+
     return(
-        <div>
-            <h2>Math Information</h2>
-            <p>Math ID: {math.mathId}</p>
-            <p>Math Name: {math.mathName}</p>
-            <p>Math Percentage: {math.percentage}</p>
-            <p>Math Percentage Set List: [{math.percentageSetList.join(', ')}]</p>
-        </div>
+        <tr className="table">
+            <td>
+                <Link to={`/chosenMath/${math.mathId}`}>
+                    {math.mathName}
+                </Link>
+            </td>
+            <td>{math.mathId}</td>
+            <td>{math.percentage.join(", ")}</td>
+            <td>{math.percentageSetList.join(", ")}</td>
+        </tr>
     );
 };
 

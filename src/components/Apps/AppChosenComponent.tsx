@@ -93,9 +93,11 @@ const AppChosenComponent: React.FC = () => {
                     <DisplayAppInfo app={currentApp} />
                 </tbody>
             </table>
-            <Link to={`/gameSetUpdate/${currentAppId}`}>
-                <button type="button" className="button">Update {currentApp.appName} App</button>
+            <br />
+            <Link className="button" to={`/chosenAppUpdate/${currentAppId}`}>
+                Update {currentApp.appName} App
             </Link>
+            <button type="button" className="buttonDelete">Delete {currentApp.appName} App</button>
             <h2>Jackpot Info</h2>
             <table>
                 <thead>

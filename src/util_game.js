@@ -28,8 +28,8 @@ export const getGame = () => {
 }
 
 // Getting Record by Id
-export const getGameById = () => {
-    return axios.get(`http://localhost:3001/games/2`)
+export const getGameById = (gameId) => {
+    return axios.get('http://localhost:3001/games/'+gameId)
     .then(response => {
         return response.data;
     })

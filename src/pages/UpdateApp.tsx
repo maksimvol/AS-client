@@ -25,13 +25,13 @@ const UpdateApp = () : JSX.Element => {
   useEffect(() => {
     getAppById(setId)
     .then(data => {
+      setApp([data])
       setName(data.appName)
       setGameSetId(data.gameSetId)
       setSelectedJackpotId(data.jackpotId);
       setRegion(data.region);
       setInterface(data.interface);
-      // setSelectedGameId(data.gameList.map(game => game.gameId));
-      // setSelectedGameVersion(data.gameList.map(game => game.gameVersion));
+      setSelectedGameId(data.gameList.map((game: any) => game.gameId));
     })
     .catch(error => {
       console.log("Error fetching app: ", error);
@@ -52,7 +52,7 @@ const UpdateApp = () : JSX.Element => {
     .catch(error => {
       console.log("Error fetching jackpot: ", error);
     })
-  },[])
+  },[setId])
 
   function checkCompatibility(e: React.ChangeEvent<HTMLInputElement>): void {
     const input = e.target.value;
@@ -81,7 +81,6 @@ const UpdateApp = () : JSX.Element => {
     const isEmptyRegion = region.length === 0;
     const isEmptyInterface = !interfaceName;
     const isEmptyGameList = selectedGameId.length === 0;
-    const isEmptyJackpot = !selectedJackpotId
 
     if(NameAlreadyExists){
         alert("App Name already exists! Please type different App Name!");
@@ -97,7 +96,7 @@ const UpdateApp = () : JSX.Element => {
             alert("Game List")
     } else{
       try{
-        const newApp: IApp = {
+        const updatedApp: IApp = {
           appName: name,
           gameSetId: gameSetId, 
           jackpotId: selectedJackpotId,
@@ -109,9 +108,9 @@ const UpdateApp = () : JSX.Element => {
             gameVersion: selectedGameVersion 
           }))
         }
-        await addApp(newApp);
-        console.log("App added successfully");
-        setApp([...app, newApp]);
+        console.log("App updated successfully");
+        console.log(updatedApp)
+        setApp([updatedApp]);
         setName("");
         setOkState(false);
         setSelectedJackpotId(0);
@@ -119,7 +118,7 @@ const UpdateApp = () : JSX.Element => {
         setInterface("");
         setSelectedGameId([]);
       } catch (error) {
-        console.error("Error adding app:", error);
+        console.error("Error updating app:", error);
       }
     }
   }
@@ -127,9 +126,6 @@ const UpdateApp = () : JSX.Element => {
   const gamesMultiSelect = game.map((gameOption) => (
     {value: gameOption.gameId.toString(), label: gameOption.gameName}
   ))
-  // const jackpotSelect = jackpot.map((jackpotOption) => (
-  //   {value:jackpotOption.jackpotId.toString(), label: jackpotOption.jackpotName}
-  // ))
 
   const jackpotSelect = [
     {value: "0", label: "No Jackpot"}, 
@@ -139,7 +135,7 @@ const UpdateApp = () : JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className='main'>
-      <h1>Update App</h1>
+      <h1>Update App {gameSetId}</h1>
       <label>App Name:</label>
       <br />
         <input className="label"
@@ -148,26 +144,28 @@ const UpdateApp = () : JSX.Element => {
           onChange={(e) => checkCompatibility(e)}
         />
       <br />
-      <label>App Id:</label>
+      {/* <label>App Id:</label>
       <br />
         <input className="label"
           type="number"
           value={gameSetId}
           disabled
         />
-      <br />
+      <br /> */}
       <label>Jackpot Name:</label>
-          <Select className="label"
-            options={jackpotSelect} 
-            onChange={(selectedOptions) => {
-              if( selectedOptions) {
-                setSelectedJackpotId(parseInt(selectedOptions?.value));
-              } else {
-                setSelectedJackpotId(0);
-              }
-            }}  
-          />
       <br />
+      <Select className="label"
+        options={jackpotSelect}
+        value={jackpotSelect.find(jackpotOption => jackpotOption.value === selectedJackpotId?.toString())}
+        onChange={(selectedOptions) => {
+          if( selectedOptions) {
+            setSelectedJackpotId(parseInt(selectedOptions.value));
+          } else {
+            setSelectedJackpotId(0);
+          }
+        }}
+/>
+<br />
       <label>Region:</label>
       <br />
         <input className="label"
@@ -186,14 +184,16 @@ const UpdateApp = () : JSX.Element => {
       <br />
       <label>Game List:</label>
         <Select className="label"
-          options={gamesMultiSelect} 
+          options={gamesMultiSelect}
+          value={gamesMultiSelect.filter(gameOption => selectedGameId.includes(parseInt(gameOption.value)))}
           isMulti
           onChange={(selectedOptions) => {
             const selectedGameId = selectedOptions.map(option => parseInt(option.value));
             setSelectedGameId(selectedGameId);
-          }}  />
+          }}  
+        />
       <br />
-      <button type="submit">Update</button>
+      <button type="submit" className="button">Update</button>
       <br />
     </form>
   );

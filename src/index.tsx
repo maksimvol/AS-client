@@ -5,13 +5,15 @@ import Home from './pages/Home';
 import AddGame from './pages/AddGame';
 import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
-import GameSet from './pages/GameSet';
+import ChosenApp from './pages/ChosenApp';
+import ChosenGame from './pages/ChosenGame';
 import AddApp from './pages/AddApp';
 import UpdateApp from './pages/UpdateApp';
 import AddJackpot from './pages/AddJackpot';
 import AddMath from './pages/AddMath';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import UpdateGame from './pages/UpdateGame';
 
 
 export default function App() {
@@ -27,8 +29,10 @@ export default function App() {
             <Route path="addJackpot" element={<AddJackpot />} />
             <Route path="addMath" element={<AddMath />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="gameSet/:setId" element={<GameSet/>} />
-            <Route path="gameSetUpdate/:setId" element={<UpdateApp/>} />
+            <Route path="chosenApp/:setId" element={<ChosenApp/>} />
+            <Route path="chosenAppUpdate/:setId" element={<UpdateApp/>} />
+            <Route path="chosenGame/:gameId" element={<ChosenGame/>} />
+            <Route path="chosenGameUpdate/:gameId" element={<UpdateGame/>} />
             <Route path="*" element={<NoPage/>} />
           </Route>
         </Routes>

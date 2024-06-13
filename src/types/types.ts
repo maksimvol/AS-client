@@ -14,9 +14,9 @@ export interface IGame {
 export interface IGameModed extends IGame{
     [key: string]: any;
 }
-export interface IGameAndAppList extends IGame{
-    appNameList: [string]
-}
+// export interface IGameAndAppList extends IGame{
+//     appNameList: [string]
+// }
 
 export interface IMath {
     mathId: number;
