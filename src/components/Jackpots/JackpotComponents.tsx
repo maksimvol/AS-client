@@ -32,7 +32,7 @@ const JackpotComponent: React.FC = () => {
         
         <table>
             <thead>
-                <JackpotHeaders jackpots={jackpotList} />
+                <JackpotHeaders />
             </thead>
             <tbody>
                 {jackpotValues.map((jackpot: any, index) => (

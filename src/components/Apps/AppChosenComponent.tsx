@@ -113,7 +113,7 @@ const AppChosenComponent: React.FC = () => {
             <h2>Jackpot Info</h2>
             <table>
                 <thead>
-                    <JackpotHeaders key={'JackpotHeaders'} jackpots={headerValue}/>
+                    <JackpotHeaders key={'JackpotHeaders'} />
                 </thead>
                 <tbody>
                     {filteredJackpots.map((jackpot, index) => (

@@ -68,8 +68,8 @@ const Navbar = () => {
                     <div className='itemImage'>
                         <img src={Triangle} alt='logo' className='triangle'/>
                     </div>
-                        <NavLink className={`itemText ${category_path === '/contact' ? "active-link" : ""}`} 
-                            to="/contact">Contact
+                        <NavLink className={`itemText ${category_path === '/contacts' ? "active-link" : ""}`} 
+                            to="/contacts">Contacts
                         </NavLink>
                 </div>
                 <div className="dateTime">

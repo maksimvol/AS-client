@@ -16,24 +16,24 @@ const GameComponent: React.FC = () => {
 
     useEffect(() => {
         getGame()
-        .then(data => {
-          setGameList(data)
+        .then(gameData => {
+          setGameList(gameData)
         })
         .catch(error => {
           console.log("Error fetching game: ", error);
         })
 
         getApp()
-        .then(data => {
-            setAppList(data)
+        .then(appData => {
+            setAppList(appData)
         })
         .catch(error => {
           console.log("Error fetching app: ", error);
         })
 
         getMath()
-        .then(data => {
-            setMath(data)
+        .then(mathData => {
+            setMath(mathData)
         })
         .catch(error => {
           console.log("Error fetching app: ", error);
@@ -41,6 +41,8 @@ const GameComponent: React.FC = () => {
       },[])
 
     let headerValue = Object(CompoundTableHeaders);
+
+
 
     appList.forEach((appList)=>{
         let v  = appList.appName;
@@ -51,14 +53,14 @@ const GameComponent: React.FC = () => {
     const processedGames = gameList.map(game => {
         game['MathName'] = math.find(e => e.mathId === game.mathId)?.mathName ?? 'No Math Attached'
 
-        appList.forEach((appList)=>{
+        appList.forEach((appList)=>{            
             let n = 'app' + appList.gameSetId;
             game[n] =  appList.gameList.find((e)=>e.gameId === game.gameId) ? true : false;
         });
-        
         return {...game}
+
     })
-    console.log("processedGames", processedGames)
+
     return (
         <table>
             <thead>

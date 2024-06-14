@@ -138,7 +138,7 @@ const AddApp = () : JSX.Element => {
       <br />
         <input className="label"
           type="number"
-          value={game.length + 1}
+          value={app.length + 1}
           disabled
         />
       <br />

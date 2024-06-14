@@ -85,16 +85,17 @@ const UpdateApp = () : JSX.Element => {
 
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    const NameAlreadyExists = app.find((e)=>e.appName === name);
+    // const NameAlreadyExists = app.find((e)=>e.appName === name);
 
     const isEmptyName = !name;
     const isEmptyRegion = region.length === 0;
     const isEmptyInterface = !interfaceName;
     const isEmptyGameList = selectedGameId.length === 0;
 
-    if(NameAlreadyExists){
-        alert("App Name already exists! Please type different App Name!");
-    } else if(isEmptyName || isEmptyRegion || isEmptyInterface || isEmptyGameList){
+    // if(NameAlreadyExists){
+    //     alert("App Name already exists! Please type different App Name!");
+    // } else 
+    if(isEmptyName || isEmptyRegion || isEmptyInterface || isEmptyGameList){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
             alert("App Name")
@@ -149,7 +150,7 @@ const UpdateApp = () : JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className='main'>
-      <h1>Update App {gameSetId}</h1>
+      <h1>Update App [{gameSetId} Id]</h1>
       <label>App Name:</label>
       <br />
         <input className="label"

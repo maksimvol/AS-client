@@ -26,6 +26,8 @@ const DisplayJackpotInfo: React.FC<{jackpot: IJackpot}> = ({ jackpot }) => {
                     {jackpot.jackpotName}
                 </Link>
             </td>
+            <td>{jackpot.jackpotType}</td>
+            <td>{jackpot.percentageSetList}</td>
             {/* <td>{currentApp?.jackpotVersion.join(' | ')}</td> */}
         </tr>
     );

@@ -49,18 +49,18 @@ const GameChosenComponent: React.FC = () => {
     
     if (!currentGame) return <></>;
 
-    let headerValue = Object(CompoundTableHeaders);
+    // let headerValue = Object(CompoundTableHeaders);
 
-    gameList.forEach((gameList)=>{
-        let v  = gameList.gameName;
-        let n = 'game'+gameList.gameId;
-        headerValue[n] = [v, gameList.gameId];
-    })
-    math.forEach((math)=>{
-        let v  = math.mathName;
-        let n = 'app'+math.mathId;
-        headerValue[n] = [v, math.mathId];
-    })
+    // gameList.forEach((gameList)=>{
+    //     let v  = gameList.gameName;
+    //     let n = 'game'+gameList.gameId;
+    //     headerValue[n] = [v, gameList.gameId];
+    // })
+    // math.forEach((math)=>{
+    //     let v  = math.mathName;
+    //     let n = 'app'+math.mathId;
+    //     headerValue[n] = [v, math.mathId];
+    // })
 
     const filteredMath = math.filter(math => 
         math.mathId === currentGame.mathId
@@ -72,7 +72,7 @@ const GameChosenComponent: React.FC = () => {
             <h2>Game Info</h2>
             <table>
                 <thead>
-                    <ChosenGameHeaders key={'ChosenGameHeaders'} game={gameList}/>
+                    <ChosenGameHeaders key={'ChosenGameHeaders'} />
                 </thead>
                 <tbody>
                     <DisplayGameInfo game={currentGame} />
@@ -86,7 +86,7 @@ const GameChosenComponent: React.FC = () => {
             <h2>Math Info</h2>
             <table>
                 <thead>
-                    <MathHeaders key={'MathHeaders'} math={headerValue}/>
+                    <MathHeaders key={'MathHeaders'} />
                 </thead>
                 <tbody>
                     {filteredMath.map((math, index) => (

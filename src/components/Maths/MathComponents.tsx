@@ -21,7 +21,7 @@ const MathComponent: React.FC = () => {
     return(
      <table>
             <thead>
-                <MathHeaders math={mathList} />
+                <MathHeaders />
             </thead>
             <tbody>
                 {mathValues.map((math: any, index) => (

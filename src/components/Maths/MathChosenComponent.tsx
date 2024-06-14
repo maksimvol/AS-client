@@ -37,20 +37,12 @@ const MathChosenComponent: React.FC = () => {
     
     if (!currentMath) return <></>;
 
-    let headerValue = Object(CompoundTableHeaders);
-
-    mathList.forEach((mathList)=>{
-        let v  = mathList.mathName;
-        let n = 'math'+mathList.mathId;
-        headerValue[n] = [v, mathList.mathId];
-    })
-
     return(
         <div className="main">
             <h2>Math Info</h2>
             <table>
                 <thead>
-                    <MathHeaders key={'MathHeaders'} math={headerValue}/>
+                    <MathHeaders key={'MathHeaders'}/>
                 </thead>
                 <tbody>
                     <DisplayMathInfo math={currentMath} />
@@ -58,9 +50,9 @@ const MathChosenComponent: React.FC = () => {
             </table>
             <br />
             <Link className="button" to={`/chosenMathUpdate/${currentMathId}`}>
-                Update {currentMath.mathName} Game
+                Update {currentMath.mathName} Math
             </Link>
-            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentMath.mathName} Game</button>
+            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentMath.mathName} Math</button>
         </div>
     );
 };

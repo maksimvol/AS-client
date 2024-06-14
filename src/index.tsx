@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
-import Contact from './pages/Contact';
+import Contacts from './pages/Contacts';
 import NoPage from './pages/NoPage';
 
 import AddApp from './pages/AddApp';
@@ -36,7 +36,7 @@ export default function App() {
             <Route path="addApp" element={<AddApp />} />
             <Route path="addJackpot" element={<AddJackpot />} />
             <Route path="addMath" element={<AddMath />} />
-            <Route path="contact" element={<Contact />} />
+            <Route path="contacts" element={<Contacts />} />
             <Route path="chosenApp/:setId" element={<ChosenApp/>} />
             <Route path="chosenAppUpdate/:setId" element={<UpdateApp/>} />
             <Route path="chosenGame/:gameId" element={<ChosenGame/>} />

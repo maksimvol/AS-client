@@ -11,7 +11,7 @@ const DisplayMathInfo: React.FC<{math: IMath}> = ({ math }) => {
                     {math.mathName}
                 </Link>
             </td>
-            <td>{math.mathId}</td>
+            {/* <td>{math.mathId}</td> */}
             <td>{math.percentage.join(", ")}</td>
             <td>{math.percentageSetList.join(", ")}</td>
         </tr>

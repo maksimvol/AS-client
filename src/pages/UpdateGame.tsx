@@ -61,7 +61,7 @@ const UpdateGame = () : JSX.Element => {
   } 
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    const NameAlreadyExists = game.find((e)=>e.gameName === name);
+    // const NameAlreadyExists = game.find((e)=>e.gameName === name);
     // const IdAlreadyExists = game.find((e)=>e.systemId === systemId);
 
     const isEmptyName = !name;
@@ -70,11 +70,12 @@ const UpdateGame = () : JSX.Element => {
     const isEmptyMaxWLCFreegames = maxWLCFreegames <= 0;
     const isEmptySelectedMathId = !selectedMathId
 
-    if(NameAlreadyExists){
-        alert("Game Name already exists! Please type different Game Name!");
+    // if(NameAlreadyExists){
+    //     alert("Game Name already exists! Please type different Game Name!");
     // } else if(IdAlreadyExists){
     //     alert("System Id already exists! Please type different System Id!");
-    } else if(isEmptyName || isEmptySystemId || isEmptyMaxWLCMain || isEmptyMaxWLCFreegames || isEmptySelectedMathId){
+    // } else 
+    if(isEmptyName || isEmptySystemId || isEmptyMaxWLCMain || isEmptyMaxWLCFreegames || isEmptySelectedMathId){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
           alert("Game Name")
@@ -135,7 +136,7 @@ const UpdateGame = () : JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className='main'>
-      <h1>Update Game</h1>
+      <h1>Update Game [{gameId} Id]</h1>
       <label>Game Name:</label>
       <br />
         <input className="label"

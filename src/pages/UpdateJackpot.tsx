@@ -51,15 +51,16 @@ const UpdateJackpot = (): JSX.Element => {
 
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    const NameAlreadyExists = jackpot.find((e)=>e.jackpotName === name);
+    // const NameAlreadyExists = jackpot.find((e)=>e.jackpotName === name);
 
     const isEmptyName = !name;
     const isEmptyJackpotType = jackpotType.length === 0;
     const isEmptyPercentageSetList = percentageSetList.length === 0;
 
-    if(NameAlreadyExists){
-        alert("Jackpot Name already exists! Please type different Jackpot Name!");
-    } else if(isEmptyName || isEmptyJackpotType || isEmptyPercentageSetList){
+    // if(NameAlreadyExists){
+    //     alert("Jackpot Name already exists! Please type different Jackpot Name!");
+    // } else 
+    if(isEmptyName || isEmptyJackpotType || isEmptyPercentageSetList){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
           alert("Jackpot Name")
@@ -101,7 +102,7 @@ const UpdateJackpot = (): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className="main">
-      <h1>Add Jackpot</h1>
+      <h1>Update Jackpot [{jackpotId} Id]</h1>
       <label>Jackpot Name:</label>
       <br />
         <input className="label"

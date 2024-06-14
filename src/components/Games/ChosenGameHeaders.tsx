@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
 
-const GameHeaders = ({headerValues}: any): JSX.Element => {
+const ChosenGameHeaders = (): JSX.Element => {
     return(
         <tr className="table">
             <th>Game Name</th>
@@ -13,4 +12,4 @@ const GameHeaders = ({headerValues}: any): JSX.Element => {
         </tr>
     )
 }
-export default GameHeaders;
+export default ChosenGameHeaders;

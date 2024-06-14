@@ -37,20 +37,20 @@ const JackpotChosenComponent: React.FC = () => {
     
     if (!currentJackpot) return <></>;
 
-    let headerValue = Object(CompoundTableHeaders);
+    // let headerValue = Object(CompoundTableHeaders);
 
-    jackpotList.forEach((jackpotList)=>{
-        let v  = jackpotList.jackpotName;
-        let n = 'jackpot'+jackpotList.jackpotId;
-        headerValue[n] = [v, jackpotList.jackpotId];
-    })
+    // jackpotList.forEach((jackpotList)=>{
+    //     let v  = jackpotList.jackpotName;
+    //     let n = 'jackpot'+jackpotList.jackpotId;
+    //     headerValue[n] = [v, jackpotList.jackpotId];
+    // })
 
     return(
         <div className="main">
             <h2>Jackpot Info</h2>
             <table>
                 <thead>
-                    <JackpotHeaders key={'JackpotHeaders'} jackpots={headerValue}/>
+                    <JackpotHeaders key={'JackpotHeaders'} />
                 </thead>
                 <tbody>
                     <DisplayJackpotInfo jackpot={currentJackpot} />

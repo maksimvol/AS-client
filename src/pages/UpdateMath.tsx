@@ -55,11 +55,12 @@ const UpdateMath = (): JSX.Element => {
     const isEmptyName = !name;
     const isEmptyPercentage = percentage.length === 0;
     const isEmptyPercentageSetList = percentageSetList.length === 0
-    const NameAlreadyExists = math.find((e) => e.mathName === name);
+    // const NameAlreadyExists = math.find((e) => e.mathName === name);
 
-    if (NameAlreadyExists) {
-      alert("Math Name already exists! Please type a different Math Name!");
-    } else if (isEmptyName || isEmptyPercentage || isEmptyPercentageSetList) {
+    // if (NameAlreadyExists) {
+    //   alert("Math Name already exists! Please type a different Math Name!");
+    // } else 
+    if (isEmptyName || isEmptyPercentage || isEmptyPercentageSetList) {
       alert("Field is empty! Please fill all the required fields!");
       if(isEmptyName){
         alert("Math Name")
@@ -102,7 +103,7 @@ const UpdateMath = (): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className="main">
-      <h1>Add Math</h1>
+      <h1>Update Math [{mathId} Id]</h1>
       <label>Math Name:</label>
       <br />
         <input className="label"
