@@ -34,8 +34,8 @@ export interface IMath {
 export interface IJackpot {
     jackpotId: number;
     jackpotName: string;
-    jackpotType: string[];
-    percentageSetList: number[];
+    jackpotType: string;
+    percentageSetList: number;
 }
 
 export interface IApp {

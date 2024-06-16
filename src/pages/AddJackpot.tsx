@@ -5,8 +5,8 @@ import { addJackpot, getJackpot } from "../util_jackpot";
 const AddJackpot = () : JSX.Element => {   
   const [name, setName] = useState("");
   const [isOk, setOkState] = useState(false);
-  const [jackpotType, setJackpotType] = useState<string[]>([]);
-  const [percentageSetList, setPercentageSetList] = useState<number[]>([]);
+  const [jackpotType, setJackpotType] = useState("");
+  const [percentageSetList, setPercentageSetList] = useState(Number);
   const [jackpot, setJackpot] = useState<IJackpot[]>([])
 
   useEffect(() => {
@@ -31,13 +31,13 @@ const AddJackpot = () : JSX.Element => {
   } 
 
   function handleJackpotType(e: React.ChangeEvent<HTMLInputElement>): void {
-    const jackpotType = e.target.value.split(' ');
+    const jackpotType = e.target.value
     setJackpotType(jackpotType);
   }
-  function handlePercentageSetList(e: React.ChangeEvent<HTMLInputElement>): void {
-    const percentageSetList = e.target.value.split(' ').map(Number);
-    setPercentageSetList(percentageSetList);
-  }
+  // function handlePercentageSetList(e: React.ChangeEvent<HTMLInputElement>): void {
+  //   const percentageSetList = e.target.value.split(' ').map(Number);
+  //   setPercentageSetList(percentageSetList);
+  // }
 
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
@@ -45,7 +45,7 @@ const AddJackpot = () : JSX.Element => {
 
     const isEmptyName = !name;
     const isEmptyJackpotType = jackpotType.length === 0;
-    const isEmptyPercentageSetList = percentageSetList.length === 0;
+    const isEmptyPercentageSetList = !percentageSetList;
 
     if(NameAlreadyExists){
         alert("Jackpot Name already exists! Please type different Jackpot Name!");
@@ -70,8 +70,8 @@ const AddJackpot = () : JSX.Element => {
         setJackpot([...jackpot, newJackpot]);
         setName("");
         setOkState(false);
-        setJackpotType([]);
-        setPercentageSetList([]);
+        setJackpotType("");
+        setPercentageSetList(0);
       } catch (error) {
         console.error("Error adding jackpot:", error);
       }
@@ -110,7 +110,7 @@ const AddJackpot = () : JSX.Element => {
       <br />
         <input className="label"
           type="number"
-          onChange={(e) => handlePercentageSetList(e)}
+          onChange={(e) => setPercentageSetList(parseInt(e.target.value))}
         />
       <br />
       <br />

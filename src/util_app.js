@@ -3,7 +3,6 @@ import axios from "axios"
 // API functions
 // Adding Record
 export const addApp = (newApp) => {
-    // console.log("client", newApp)
     return axios.post(`http://localhost:3001/apps`, newApp)
     
     .then(response => console.log(response.data))

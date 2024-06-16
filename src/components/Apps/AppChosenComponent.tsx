@@ -18,42 +18,46 @@ const AppChosenComponent: React.FC = () => {
     const [jackpotList, setJackpotList] = useState<IJackpot[]>([])
     const [appList, setAppList] = useState<IApp[]>([])
     const [math, setMath] = useState<IMath[]>([])
+    const [sortByName, setSortByName] = useState<boolean>(false);
 
     const navigate = useNavigate(); 
 
     useEffect(() => {
         getApp()
-        .then(data => {
-            setAppList(data)
+        .then(appData => {
+            setAppList(appData)
         })
         .catch(error => {
           console.log("Error fetching app: ", error);
         })
 
         getGame()
-        .then(data => {
-          setGameList(data)
+        .then(gameData => {
+            if (sortByName) {
+                gameData.sort((a: IGameModed, b: IGameModed) => a.gameName.localeCompare(b.gameName));
+            }
+          setGameList(gameData)
         })
         .catch(error => {
           console.log("Error fetching game: ", error);
         })
 
         getJackpot()
-        .then(data => {
-            setJackpotList(data)
+        .then(jackpotData => {
+            setJackpotList(jackpotData)
         })
         .catch(error => {
           console.log("Error fetching jackpot: ", error);
         })
 
         getMath()
-        .then(data => {
-            setMath(data)
+        .then(mathData => {
+            setMath(mathData)
         })
         .catch(error => {
           console.log("Error fetching math: ", error);
         })
-      },[])
+      },[sortByName])
 
     let {setId} = useParams()
     let currentAppId = Number(setId)
@@ -93,6 +97,10 @@ const AppChosenComponent: React.FC = () => {
         jackpot.jackpotId === currentApp.jackpotId
     );
 
+    const nameSort = () => {
+        setSortByName(prev => !prev);
+    };
+
     return(
         <div className="main">
             <h2>App Name: {currentApp.appName}</h2>
@@ -122,6 +130,8 @@ const AppChosenComponent: React.FC = () => {
                 </tbody>
             </table>
             <h2>Games Info</h2>
+            <button className="button" onClick={nameSort}>Sort by Name</button><br />
+            <br />
             <table>
                 <thead>
                     <GameHeaders key={'GamesListHeaders'} headerValues={headerValue}/>
@@ -134,6 +144,7 @@ const AppChosenComponent: React.FC = () => {
                     }
                 </tbody>
             </table>
+            
         </div>
     );
 };

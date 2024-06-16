@@ -123,7 +123,6 @@ const UpdateApp = () : JSX.Element => {
         await updateAppById(setId, updatedApp); 
 
         console.log("App updated successfully");
-        console.log(updatedApp)
         setApp([updatedApp]);
         setName("");
         setOkState(false);

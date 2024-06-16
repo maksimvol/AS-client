@@ -6,20 +6,31 @@ import DisplayMathInfo from "./DisplayMathComponents";
 
 const MathComponent: React.FC = () => {
     const [mathList, setMathList] = useState<IMath[]>([])
+    const [sortByName, setSortByName] = useState<boolean>(false);
     const mathValues = Object.values(mathList);
 
     useEffect(() => {
         getMath()
-        .then(data => {
-            setMathList(data)
+        .then(mathData => {
+            if (sortByName) {
+                mathData.sort((a: IMath, b: IMath) => a.mathName.localeCompare(b.mathName));
+            }
+            setMathList(mathData)
         })
         .catch(error => {
           console.log("Error fetching app: ", error);
         })
-      },[])
+      },[sortByName])
+
+    const nameSort = () => {
+        setSortByName(prev => !prev);
+    };
 
     return(
-     <table>
+        <>
+        <button className="button" onClick={nameSort}>Sort by Name</button><br />
+        <br />
+        <table>
             <thead>
                 <MathHeaders />
             </thead>
@@ -29,6 +40,7 @@ const MathComponent: React.FC = () => {
                 ))}
             </tbody>
         </table>
+    </>
     );
 };
 export default MathComponent;
