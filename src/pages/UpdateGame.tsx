@@ -61,8 +61,6 @@ const UpdateGame = () : JSX.Element => {
   } 
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    // const NameAlreadyExists = game.find((e)=>e.gameName === name);
-    // const IdAlreadyExists = game.find((e)=>e.systemId === systemId);
 
     const isEmptyName = !name;
     const isEmptySystemId = !systemId;
@@ -70,11 +68,6 @@ const UpdateGame = () : JSX.Element => {
     const isEmptyMaxWLCFreegames = maxWLCFreegames <= 0;
     const isEmptySelectedMathId = !selectedMathId
 
-    // if(NameAlreadyExists){
-    //     alert("Game Name already exists! Please type different Game Name!");
-    // } else if(IdAlreadyExists){
-    //     alert("System Id already exists! Please type different System Id!");
-    // } else 
     if(isEmptyName || isEmptySystemId || isEmptyMaxWLCMain || isEmptyMaxWLCFreegames || isEmptySelectedMathId){
         alert("Field Is Empty! Please Fill all the required fields!")
         if(isEmptyName)
@@ -145,22 +138,6 @@ const UpdateGame = () : JSX.Element => {
           onChange={(e) => checkCompatibility(e)}
         />
       <br />
-      {/* <label>Game Id: </label>
-      <br />
-        <input className="label"
-          type="number"
-          value={game.length + 1}
-          disabled
-        />
-      <br /> */}
-      {/* <label>System Id:</label>
-      <br />
-        <input className="label"
-          type="number"
-          value={systemId}
-          onChange={(e) => setSystemId(parseInt(e.target.value))}
-        />
-      <br /> */}
       <label>Max WLC Main:</label>
       <br />
         <input className="label"
