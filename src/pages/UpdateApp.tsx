@@ -158,14 +158,6 @@ const UpdateApp = () : JSX.Element => {
           onChange={(e) => checkCompatibility(e)}
         />
       <br />
-      {/* <label>App Id:</label>
-      <br />
-        <input className="label"
-          type="number"
-          value={gameSetId}
-          disabled
-        />
-      <br /> */}
       <label>Jackpot Name:</label>
       <br />
       <Select className="label"

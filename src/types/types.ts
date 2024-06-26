@@ -14,16 +14,7 @@ export interface IGame {
 export interface IGameModed extends IGame{
     [key: string]: any;
 }
-// export interface IGameAndAppList extends IGame{
-//     appNameList: [string]
-// }
 
-export interface IMath {
-    mathId: number;
-    mathName: string;
-    percentage: number[];
-    percentageSetList: number[];
-}
 export interface IMath {
     mathId: number;
     mathName: string;
@@ -49,9 +40,4 @@ export interface IApp {
         gameId: number;
         gameVersion: [string, string];
     }[];
-}
-
-export interface IUser {
-    userId: number;
-    userGroupId: number;
 }

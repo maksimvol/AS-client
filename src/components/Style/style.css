@@ -38,7 +38,6 @@
     -ms-flex-align: center;
     align-items: center;
     cursor: text;
-    /* display: flex; */
     -webkit-box-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;

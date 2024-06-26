@@ -22,10 +22,6 @@
     transition:  all 0.3s ease-in-out;
 }
 
-.itemImage{
-    /* height: 15px; */
-}
-
 .triangle{
     height: 15px;
     transition: transform 0.3s ease;

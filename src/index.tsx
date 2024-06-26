@@ -27,7 +27,6 @@ import Navbar from './components/Navbar';
 export default function App() {
   return (
     <Router>
-      {/* <div className='app-box'> */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -49,7 +48,6 @@ export default function App() {
           </Route>
         </Routes>
         <Footer />
-      {/* </div> */}
     </Router>
   );
 };

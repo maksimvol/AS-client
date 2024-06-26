@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IApp, IJackpot } from "../../types/types";
 import "../Style/style.css";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getApp } from "../../util_app";
 
 const DisplayJackpotInfo: React.FC<{jackpot: IJackpot}> = ({ jackpot }) => {
@@ -16,9 +16,6 @@ const DisplayJackpotInfo: React.FC<{jackpot: IJackpot}> = ({ jackpot }) => {
           console.log("Error fetching app: ", error);
         })
       },[])
-    // let {setId} = useParams()
-    // let currentAppId = Number(setId)
-    // const currentApp: IApp | undefined | null = appList.find((appV: IApp) => appV.gameSetId === currentAppId)
     return(
         <tr className="table">
             <td>
@@ -28,7 +25,6 @@ const DisplayJackpotInfo: React.FC<{jackpot: IJackpot}> = ({ jackpot }) => {
             </td>
             <td>{jackpot.jackpotType}</td>
             <td>{jackpot.percentageSetList}</td>
-            {/* <td>{currentApp?.jackpotVersion.join(' | ')}</td> */}
         </tr>
     );
 };
