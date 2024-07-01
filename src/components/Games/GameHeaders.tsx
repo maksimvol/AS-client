@@ -7,8 +7,8 @@ const GameHeaders = ({headerValues}: any): JSX.Element => {
                 Object.values(headerValues).map((headerValue: any, index)=>{
                     if(Array.isArray(headerValue)){
                         return <th key={'hVal'+index}>
-                                    <Link to={`/chosenApp/${headerValue[1]}`}>
-                                        {headerValue[0]}
+                                    <Link to={`/chosenApp/${headerValue[1]}`} className="appHeader">
+                                        {headerValue[0] }
                                     </Link>
                                  </th> 
                     } else {

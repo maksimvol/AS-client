@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { IJackpot } from "../../types/types";
-import { CompoundTableHeaders } from "../Data/Headers";
 import { deleteJackpotById, getJackpot } from "../../util_jackpot";
 import JackpotHeaders from "./JackpotHeaders";
 import DisplayJackpotInfo from "./DisplayJackpotComponents";
 
-const JackpotChosenComponent: React.FC = () => {
+const JackpotChosenComponent: React.FC<{ user: any }> = ({ user }) => {
     const [jackpotList, setJackpotList] = useState<IJackpot[]>([])
 
     const navigate = useNavigate(); 
@@ -57,11 +56,15 @@ const JackpotChosenComponent: React.FC = () => {
                 </tbody>
             </table>
             <br />
-            <Link className="button" to={`/chosenJackpotUpdate/${currentJackpotId}`}>
-                Update {currentJackpot.jackpotName} Jackpot
-            </Link>
-            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentJackpot.jackpotName} Jackpot</button>
-        </div>
+            {user?.role === 'admin' && (
+                <div>
+                <Link className="button" to={`/chosenJackpotUpdate/${currentJackpotId}`}>
+                    Update {currentJackpot.jackpotName} Jackpot
+                </Link>
+                <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentJackpot.jackpotName} Jackpot</button>
+            </div>
+            )}
+            </div>
     );
 };
 export default JackpotChosenComponent;

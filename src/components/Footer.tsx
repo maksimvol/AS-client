@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css'
-import TSI_Gif from './Images/tsi_spinning.gif'
+import DLV_Logo from './Images/dlv.png'
 import { NavLink, useLocation  } from 'react-router-dom';
 import { scroll } from '../util';
 
@@ -10,7 +10,7 @@ const Footer = () => {
     return (
         <div className='footer'>
             <NavLink to={category_path} onClick={scroll}>
-                <center><img src={TSI_Gif} alt='logo_gif' className="logo_gif"/></center>
+                <center><img src={DLV_Logo} alt='logo' className="logo"/></center>
             </NavLink>
         </div>
     )

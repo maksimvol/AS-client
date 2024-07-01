@@ -5,7 +5,7 @@ const Contacts = () => {
         <h2>Support</h2>
           Maksims Volokotkins
           <br />
-          Email: st81502@students.tsi.lv
+          Email: dlv@dlv.lv
       </div>
     );
   };

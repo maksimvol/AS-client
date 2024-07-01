@@ -13,7 +13,7 @@ import { getGame } from "../../util_game";
 import { getJackpot } from "../../util_jackpot";
 import { getMath } from "../../util_math";
 
-const AppChosenComponent: React.FC = () => {
+const AppChosenComponent: React.FC<{ user: any }> = ({ user }) => {
     const [gameList, setGameList] = useState<IGameModed[]>([])
     const [jackpotList, setJackpotList] = useState<IJackpot[]>([])
     const [appList, setAppList] = useState<IApp[]>([])
@@ -114,10 +114,14 @@ const AppChosenComponent: React.FC = () => {
                 </tbody>
             </table>
             <br />
-            <Link className="button" to={`/chosenAppUpdate/${currentAppId}`}>
-                Update {currentApp.appName} App
-            </Link>
-            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentApp.appName} App</button>
+            {user?.role === 'admin' && (
+                <div>
+                <Link className="button" to={`/chosenAppUpdate/${currentAppId}`}>
+                    Update {currentApp.appName} App
+                </Link>
+                <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentApp.appName} App</button>
+            </div> 
+            )}
             <h2>Jackpot Info</h2>
             <table>
                 <thead>

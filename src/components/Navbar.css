@@ -1,6 +1,7 @@
 .navbar{
     width: 100%;
-    background-color: #B3B4BD;
+    height: 40px;
+    background-color: #6484c4;
     position: sticky;
     z-index: 10;
 
@@ -29,7 +30,7 @@
 
 .item:hover{
     .itemText{
-        color:white
+        color:black
     }
     .triangle{
         transform: rotate(360deg);
@@ -46,12 +47,13 @@
 }
 
 .itemText{
-    color: black;
+    color: white;
     font-size: 20px;
     font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
 .dateTime{
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;

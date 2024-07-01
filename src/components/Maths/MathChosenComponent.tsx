@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { IMath } from "../../types/types";
-import { CompoundTableHeaders } from "../Data/Headers";
 import { deleteMathById, getMath } from "../../util_math";
 import MathHeaders from "../Maths/MathHeaders";
 import DisplayMathInfo from "./DisplayMathComponents";
 
-const MathChosenComponent: React.FC = () => {
+const MathChosenComponent: React.FC<{ user: any }> = ({ user }) => {
     const [mathList, setMathList] = useState<IMath[]>([])
 
     const navigate = useNavigate(); 
@@ -49,10 +48,14 @@ const MathChosenComponent: React.FC = () => {
                 </tbody>
             </table>
             <br />
-            <Link className="button" to={`/chosenMathUpdate/${currentMathId}`}>
-                Update {currentMath.mathName} Math
-            </Link>
-            <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentMath.mathName} Math</button>
+            {user?.role === 'admin' && (
+                <div>
+                    <Link className="button" to={`/chosenMathUpdate/${currentMathId}`}>
+                        Update {currentMath.mathName} Math
+                    </Link>
+                    <button type="button" className="buttonDelete" onClick={handleDelete}>Delete {currentMath.mathName} Math</button>
+                </div>
+            )}
         </div>
     );
 };
